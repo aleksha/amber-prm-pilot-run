@@ -46,21 +46,21 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
   G4ParticleDefinition* particleDefMu = G4ParticleTable::GetParticleTable()->FindParticle("mu+");
 
   G4PrimaryParticle* particle1;
-  G4PrimaryParticle* particle2;
+//  G4PrimaryParticle* particle2;
 
   particle1 = new G4PrimaryParticle(particleDefMu);
-  particle2 = new G4PrimaryParticle(particleDefMu);
+//  particle2 = new G4PrimaryParticle(particleDefMu);
 
   G4double p_mu = 100.*GeV;
 
-// G4double pos  = -6299.0*mm; // for reso
-  G4double pos  = 1075.0*mm; // for reso
+ G4double pos  = -6299.0*mm; // for reso
+//  G4double pos  = 1075.0*mm; // for reso
 // G4double pos  =  -885.0*mm; // for thetaX LONG
 // G4double pos  =  -(885.0-425.0)*mm; // for thetaX SHORT
 //   G4double pos  =   790.0*mm; //
 // G4double pos  =   750.0*mm; //
 
-  double theta = 0.0;
+//  double theta = 0.0;
 //  double theta = 0.00011;
 //  double theta = 0.00033;
 //  double theta = 0.002;
@@ -81,7 +81,7 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
 //  G4ThreeVector positionB( 0, 20.0*mm, pos ); // check edge of Be window
 //  G4ThreeVector positionB( 0, 29.0*mm, pos ); // check edge of Be window
 
-  particle1->SetMomentum( 0, 0,  -p_mu );
+  particle1->SetMomentum( 0, 0,  p_mu );
 //  particle1->SetMomentum( 0, theta*p_mu,  p_mu );
 //  particle2->SetMomentum( 0,          0, -p_mu );
 

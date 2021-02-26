@@ -100,13 +100,13 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4double lG10_z =   1.500*mm;
 
   // z-pozitiion of Si layers
-  G4double l00_z = -5825.000*mm + 0.5 * lSi_z;
-  G4double l01_z = - 825.000*mm + 0.5 * lSi_z;
-  G4double l02_z =   825.000*mm - 0.5 * lSi_z;
-  G4double l03_z =  5825.000*mm - 0.5 * lSi_z;
-  G4double l04_z = -5900.000*mm + 0.5 * lSi_z;
-  G4double l05_z = - 900.000*mm + 0.5 * lSi_z;
-  G4double l06_z =   900.000*mm - 0.5 * lSi_z;
+  G4double l00_z = -5900.000*mm + 0.5 * lSi_z;
+  G4double l01_z = -5825.000*mm + 0.5 * lSi_z;
+  G4double l02_z = - 900.000*mm + 0.5 * lSi_z;
+  G4double l03_z = - 825.000*mm + 0.5 * lSi_z;
+  G4double l04_z =   825.000*mm - 0.5 * lSi_z;
+  G4double l05_z =   900.000*mm - 0.5 * lSi_z;
+  G4double l06_z =  5825.000*mm - 0.5 * lSi_z;
   G4double l07_z =  5900.000*mm - 0.5 * lSi_z;
 
   // z-pozitiion of PCB for Si layers
