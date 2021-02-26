@@ -33,6 +33,10 @@ class MUPSteppingAction : public G4UserSteppingAction
     G4LogicalVolume* fLV01;
     G4LogicalVolume* fLV02;
     G4LogicalVolume* fLV03;
+    G4LogicalVolume* fLV04;
+    G4LogicalVolume* fLV05;
+    G4LogicalVolume* fLV06;
+    G4LogicalVolume* fLV07;
 };
 //------------------------------------------------------------------------------
 #endif

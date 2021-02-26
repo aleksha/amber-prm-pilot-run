@@ -28,14 +28,14 @@ cd amber-prm-pilot-run
 mkdir build
 cd build
 cmake -DGeant4_DIR=/home/adzyuba/miniconda3/envs/g4-mc/lib/Geant4-10.7.1/ ../source
-make
+make -j4
 ```
 As a result an `exec_MUP` application should be compiled. 
 You can run it directly from `build/` deirecory or create a specila 
 `run/` place:
 ```bash
 mkdir ../run
-cp exec_MUP run.mac ../run
+cp exec_MUP run.mac seed ../run
 cd ../run
 ./exec_MUP run.mac >> inLOG
 ```

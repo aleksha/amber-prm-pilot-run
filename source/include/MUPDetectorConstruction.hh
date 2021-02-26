@@ -21,12 +21,20 @@ class MUPDetectorConstruction : public G4VUserDetectorConstruction
     G4LogicalVolume* GetLV01() const { return fLV01; }
     G4LogicalVolume* GetLV02() const { return fLV02; }
     G4LogicalVolume* GetLV03() const { return fLV03; }
+    G4LogicalVolume* GetLV04() const { return fLV04; }
+    G4LogicalVolume* GetLV05() const { return fLV05; }
+    G4LogicalVolume* GetLV06() const { return fLV06; }
+    G4LogicalVolume* GetLV07() const { return fLV07; }
 
   protected:
     G4LogicalVolume*  fLV00;
     G4LogicalVolume*  fLV01;
     G4LogicalVolume*  fLV02;
     G4LogicalVolume*  fLV03;
+    G4LogicalVolume*  fLV04;
+    G4LogicalVolume*  fLV05;
+    G4LogicalVolume*  fLV06;
+    G4LogicalVolume*  fLV07;
 };
 
 #endif
