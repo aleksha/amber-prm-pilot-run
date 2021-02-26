@@ -55,13 +55,13 @@ void MUPSteppingAction::UserSteppingAction(const G4Step* step)
   if ( vol == -1 ) return;
 
   G4Track* trk = step->GetTrack();
-  int    tr_c  = trk->GetDefinition()->GetPDGCharge();
+//  int    tr_c  = trk->GetDefinition()->GetPDGCharge();
 
 
   int    ev_id = G4EventManager::GetEventManager()->GetConstCurrentEvent()->GetEventID() ;
   int    tr_id = trk->GetTrackID() ;
-  double tr_m  = trk->GetDefinition()->GetPDGMass()  ;
-  G4int p_code = trk->GetDefinition()->GetPDGEncoding();
+//  double tr_m  = trk->GetDefinition()->GetPDGMass()  ;
+//  G4int p_code = trk->GetDefinition()->GetPDGEncoding();
 
   int st_id = 0;
   if( step->IsFirstStepInVolume() ){ st_id = 1; }

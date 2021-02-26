@@ -63,7 +63,7 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   //CarbonFiber->AddElement(C,1);
 
   G4int ncomponents, natoms;
-  G4double fractionmass, density;
+  G4double density;
 
   G4Element* H  = nist->FindOrBuildElement(1);
   G4Element* C  = nist->FindOrBuildElement(6);
@@ -155,7 +155,7 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4double ll_xy =  199.000*mm;
 
 
-  G4Material* AlSolid = nist->FindOrBuildMaterial("G4_Be");
+  //G4Material* AlSolid = nist->FindOrBuildMaterial("G4_Be");
   G4Material* CuSolid = nist->FindOrBuildMaterial("G4_Cu");
   //G4Material* WSolid  = nist->FindOrBuildMaterial("G4_W" );
   G4Material* Kapton  = nist->FindOrBuildMaterial("G4_KAPTON" );
