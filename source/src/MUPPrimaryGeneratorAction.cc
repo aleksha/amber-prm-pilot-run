@@ -12,6 +12,12 @@
 
 #include "G4VPrimaryGenerator.hh"
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+
+
 //==============================================================================
 // HERE IS PRIMARY GENERATOR CLASS FIRST
 //==============================================================================
@@ -28,20 +34,27 @@ class PrimaryGenerator : public G4VPrimaryGenerator
 
   private:
     G4double fXpos, fYpos, fZpos;      //solid angle
+    double fX, fY, fAX, fAY, fMom;
+
+    std::ifstream in_file ;
 
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 PrimaryGenerator::PrimaryGenerator()
 : G4VPrimaryGenerator()
-{ }
+{ 
+  in_file.open("../beamfile/rand_input.txt", std::ios::in);
+}
 
 PrimaryGenerator::~PrimaryGenerator()
-{ }
+{ 
+  in_file.close();
+}
 
 void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
 {
-
+  in_file  >> fX >> fY >> fAX >> fAY >> fMom;
 //  G4ParticleDefinition* particleDefMu = G4ParticleTable::GetParticleTable()->FindParticle("mu-");
   G4ParticleDefinition* particleDefMu = G4ParticleTable::GetParticleTable()->FindParticle("mu+");
 
@@ -51,7 +64,7 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
   particle1 = new G4PrimaryParticle(particleDefMu);
 //  particle2 = new G4PrimaryParticle(particleDefMu);
 
-  G4double p_mu = 100.*GeV;
+  G4double p_mu = fMom*GeV;
 
  G4double pos  = -6299.0*mm; // for reso
 //  G4double pos  = 1075.0*mm; // for reso
@@ -65,23 +78,13 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
 //  double theta = 0.00033;
 //  double theta = 0.002;
 
-  fXpos = 0.*mm;  fYpos = 0.*mm;  fZpos = pos;
-  if( false ){
-    fXpos = (G4UniformRand() - 0.5)*29.*mm;
-    fYpos = (G4UniformRand() - 0.5)*29.*mm;
-//    fZpos = (380*G4UniformRand() + 10.)*mm;
-//    fZpos = (380*G4UniformRand() + 35.)*mm;
-    while( fXpos*fXpos + fYpos*fYpos > 29.*29. ){
-      fXpos = (G4UniformRand() - 0.5)*29.*mm;
-      fYpos = (G4UniformRand() - 0.5)*29.*mm;
-    }
-  }
+  fXpos = fX*mm;  fYpos = fY*mm;  fZpos = pos;
 
   G4ThreeVector positionB( fXpos, fYpos, fZpos );
 //  G4ThreeVector positionB( 0, 20.0*mm, pos ); // check edge of Be window
 //  G4ThreeVector positionB( 0, 29.0*mm, pos ); // check edge of Be window
 
-  particle1->SetMomentum( 0, 0,  p_mu );
+  particle1->SetMomentum( 0.001*fAX*p_mu, 0.001*fAY*p_mu, p_mu );
 //  particle1->SetMomentum( 0, theta*p_mu,  p_mu );
 //  particle2->SetMomentum( 0,          0, -p_mu );
 
