@@ -153,6 +153,8 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
 //------------------------------------------
 
   G4double ll_xy =  199.000*mm;
+  G4double l_Sx  =   15.000*mm;
+  G4double l_Sy  =   30.000*mm;
 
 
   //G4Material* AlSolid = nist->FindOrBuildMaterial("G4_Be");
@@ -186,14 +188,14 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4LogicalVolume* logicWorld = new G4LogicalVolume(solidWorld, w_mat, "World");
 
   // LVs
-  G4Box* solidLV00 = new G4Box("LV00", 0.5*l_xy, 0.5*l_xy, 0.5*lSi_z);
-  G4Box* solidLV01 = new G4Box("LV01", 0.5*l_xy, 0.5*l_xy, 0.5*lSi_z);
-  G4Box* solidLV02 = new G4Box("LV02", 0.5*l_xy, 0.5*l_xy, 0.5*lSi_z);
-  G4Box* solidLV03 = new G4Box("LV03", 0.5*l_xy, 0.5*l_xy, 0.5*lSi_z);
-  G4Box* solidLV04 = new G4Box("LV04", 0.5*l_xy, 0.5*l_xy, 0.5*lSi_z);
-  G4Box* solidLV05 = new G4Box("LV05", 0.5*l_xy, 0.5*l_xy, 0.5*lSi_z);
-  G4Box* solidLV06 = new G4Box("LV06", 0.5*l_xy, 0.5*l_xy, 0.5*lSi_z);
-  G4Box* solidLV07 = new G4Box("LV07", 0.5*l_xy, 0.5*l_xy, 0.5*lSi_z);
+  G4Box* solidLV00 = new G4Box("LV00", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
+  G4Box* solidLV01 = new G4Box("LV01", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
+  G4Box* solidLV02 = new G4Box("LV02", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
+  G4Box* solidLV03 = new G4Box("LV03", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
+  G4Box* solidLV04 = new G4Box("LV04", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
+  G4Box* solidLV05 = new G4Box("LV05", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
+  G4Box* solidLV06 = new G4Box("LV06", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
+  G4Box* solidLV07 = new G4Box("LV07", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
 
   G4Box* solidLVG0 = new G4Box("LVG0", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
   G4Box* solidLVG1 = new G4Box("LVG1", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
@@ -203,6 +205,15 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4Box* solidLVG5 = new G4Box("LVG5", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
   G4Box* solidLVG6 = new G4Box("LVG6", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
   G4Box* solidLVG7 = new G4Box("LVG7", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
+
+  G4Box* solidLVW0 = new G4Box("LVW0", 0.5*l_Sx, 0.5*l_Sy, 0.5*lG10_z);
+  G4Box* solidLVW1 = new G4Box("LVW1", 0.5*l_Sx, 0.5*l_Sy, 0.5*lG10_z);
+  G4Box* solidLVW2 = new G4Box("LVW2", 0.5*l_Sx, 0.5*l_Sy, 0.5*lG10_z);
+  G4Box* solidLVW3 = new G4Box("LVW3", 0.5*l_Sx, 0.5*l_Sy, 0.5*lG10_z);
+  G4Box* solidLVW4 = new G4Box("LVW4", 0.5*l_Sx, 0.5*l_Sy, 0.5*lG10_z);
+  G4Box* solidLVW5 = new G4Box("LVW5", 0.5*l_Sx, 0.5*l_Sy, 0.5*lG10_z);
+  G4Box* solidLVW6 = new G4Box("LVW6", 0.5*l_Sx, 0.5*l_Sy, 0.5*lG10_z);
+  G4Box* solidLVW7 = new G4Box("LVW7", 0.5*l_Sx, 0.5*l_Sy, 0.5*lG10_z);
 
   G4Box* solidLV10 = new G4Box("LV10", 0.5*l_xy, 0.5*l_xy, 0.5*lH2_z);
 
@@ -239,6 +250,15 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4LogicalVolume* logicLVG5 = new G4LogicalVolume(solidLVG5 , G10, "LVG5");
   G4LogicalVolume* logicLVG6 = new G4LogicalVolume(solidLVG6 , G10, "LVG6");
   G4LogicalVolume* logicLVG7 = new G4LogicalVolume(solidLVG7 , G10, "LVG7");
+
+  G4LogicalVolume* logicLVW0 = new G4LogicalVolume(solidLVW0 , w_mat, "LVW0");
+  G4LogicalVolume* logicLVW1 = new G4LogicalVolume(solidLVW1 , w_mat, "LVW1");
+  G4LogicalVolume* logicLVW2 = new G4LogicalVolume(solidLVW2 , w_mat, "LVW2");
+  G4LogicalVolume* logicLVW3 = new G4LogicalVolume(solidLVW3 , w_mat, "LVW3");
+  G4LogicalVolume* logicLVW4 = new G4LogicalVolume(solidLVW4 , w_mat, "LVW4");
+  G4LogicalVolume* logicLVW5 = new G4LogicalVolume(solidLVW5 , w_mat, "LVW5");
+  G4LogicalVolume* logicLVW6 = new G4LogicalVolume(solidLVW6 , w_mat, "LVW6");
+  G4LogicalVolume* logicLVW7 = new G4LogicalVolume(solidLVW7 , w_mat, "LVW7");
 //---
   G4LogicalVolume* logicLV10 = new G4LogicalVolume(solidLV10 , H2Gas  , "LV10");
 //  G4LogicalVolume* logicLV10 = new G4LogicalVolume(solidLV10 , w_mat  , "LV10");
@@ -323,6 +343,15 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   new G4PVPlacement(0, lG5_pos, logicLVG5, "LVG5", logicWorld, false, 0, checkOverlaps);
   new G4PVPlacement(0, lG6_pos, logicLVG6, "LVG6", logicWorld, false, 0, checkOverlaps);
   new G4PVPlacement(0, lG7_pos, logicLVG7, "LVG7", logicWorld, false, 0, checkOverlaps);
+  // windows in PCBs
+  new G4PVPlacement(0, lG0_pos, logicLVW0, "LVW0", logicLVG0, false, 0, checkOverlaps);
+  new G4PVPlacement(0, lG1_pos, logicLVW1, "LVW1", logicLVG1, false, 0, checkOverlaps);
+  new G4PVPlacement(0, lG2_pos, logicLVW2, "LVW2", logicLVG2, false, 0, checkOverlaps);
+  new G4PVPlacement(0, lG3_pos, logicLVW3, "LVW3", logicLVG3, false, 0, checkOverlaps);
+  new G4PVPlacement(0, lG4_pos, logicLVW4, "LVW4", logicLVG4, false, 0, checkOverlaps);
+  new G4PVPlacement(0, lG5_pos, logicLVW5, "LVW5", logicLVG5, false, 0, checkOverlaps);
+  new G4PVPlacement(0, lG6_pos, logicLVW6, "LVW6", logicLVG6, false, 0, checkOverlaps);
+  new G4PVPlacement(0, lG7_pos, logicLVW7, "LVW7", logicLVG7, false, 0, checkOverlaps);
   // - H2 TPC
   new G4PVPlacement(0, l10_pos, logicLV10, "LV10", logicWorld, false, 0, checkOverlaps);
   // - Be windows 
