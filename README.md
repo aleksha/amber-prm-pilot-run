@@ -31,6 +31,8 @@ cmake -DGeant4_DIR=/home/adzyuba/miniconda3/envs/g4-mc/lib/Geant4-10.7.1/ ../sou
 make -j4
 ```
 As a result an `exec_MUP` application should be compiled. 
+One can use `build_apps.sh` script.
+
 You can run it directly from `build/` deirecory or create a specila 
 `run/` place:
 ```bash
