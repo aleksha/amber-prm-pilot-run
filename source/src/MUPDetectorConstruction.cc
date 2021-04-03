@@ -155,6 +155,8 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4double ll_xy =  199.000*mm;
   G4double l_Sx  =   15.000*mm;
   G4double l_Sy  =   30.000*mm;
+  G4double l_Gx  =  150.000*mm;
+  G4double l_Gy  =  150.000*mm;
 
 
   //G4Material* AlSolid = nist->FindOrBuildMaterial("G4_Be");
@@ -197,14 +199,14 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4Box* solidLV06 = new G4Box("LV06", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
   G4Box* solidLV07 = new G4Box("LV07", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
 
-  G4Box* solidLVG0 = new G4Box("LVG0", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
-  G4Box* solidLVG1 = new G4Box("LVG1", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
-  G4Box* solidLVG2 = new G4Box("LVG2", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
-  G4Box* solidLVG3 = new G4Box("LVG3", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
-  G4Box* solidLVG4 = new G4Box("LVG4", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
-  G4Box* solidLVG5 = new G4Box("LVG5", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
-  G4Box* solidLVG6 = new G4Box("LVG6", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
-  G4Box* solidLVG7 = new G4Box("LVG7", 0.5*l_xy, 0.5*l_xy, 0.5*lG10_z);
+  G4Box* solidLVG0 = new G4Box("LVG0", 0.5*l_Gx, 0.5*l_Gy, 0.5*lG10_z);
+  G4Box* solidLVG1 = new G4Box("LVG1", 0.5*l_Gx, 0.5*l_Gy, 0.5*lG10_z);
+  G4Box* solidLVG2 = new G4Box("LVG2", 0.5*l_Gx, 0.5*l_Gy, 0.5*lG10_z);
+  G4Box* solidLVG3 = new G4Box("LVG3", 0.5*l_Gx, 0.5*l_Gy, 0.5*lG10_z);
+  G4Box* solidLVG4 = new G4Box("LVG4", 0.5*l_Gx, 0.5*l_Gy, 0.5*lG10_z);
+  G4Box* solidLVG5 = new G4Box("LVG5", 0.5*l_Gx, 0.5*l_Gy, 0.5*lG10_z);
+  G4Box* solidLVG6 = new G4Box("LVG6", 0.5*l_Gx, 0.5*l_Gy, 0.5*lG10_z);
+  G4Box* solidLVG7 = new G4Box("LVG7", 0.5*l_Gx, 0.5*l_Gy, 0.5*lG10_z);
 
   G4Box* solidLVW0 = new G4Box("LVW0", 0.5*l_Sx, 0.5*l_Sy, 0.5*lG10_z);
   G4Box* solidLVW1 = new G4Box("LVW1", 0.5*l_Sx, 0.5*l_Sy, 0.5*lG10_z);
