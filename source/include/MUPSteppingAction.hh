@@ -28,6 +28,7 @@ class MUPSteppingAction : public G4UserSteppingAction
   private:
     MUPEventAction*  fEventAction;
     std::ofstream myOUT;
+    std::ofstream myTPC;
 
     G4LogicalVolume* fLV00;
     G4LogicalVolume* fLV01;
@@ -37,6 +38,7 @@ class MUPSteppingAction : public G4UserSteppingAction
     G4LogicalVolume* fLV05;
     G4LogicalVolume* fLV06;
     G4LogicalVolume* fLV07;
+    G4LogicalVolume* fLV10;
 };
 //------------------------------------------------------------------------------
 #endif

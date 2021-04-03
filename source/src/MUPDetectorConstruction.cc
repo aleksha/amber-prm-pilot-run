@@ -15,7 +15,7 @@
 //------------------------------------------------------------------------------
 MUPDetectorConstruction::MUPDetectorConstruction()
 : G4VUserDetectorConstruction(),
-  fLV00(0), fLV01(0), fLV02(0), fLV03(0), fLV04(0), fLV05(0), fLV06(0), fLV07(0)
+  fLV00(0), fLV01(0), fLV02(0), fLV03(0), fLV04(0), fLV05(0), fLV06(0), fLV07(0), fLV10(0)
 { }
 //------------------------------------------------------------------------------
 MUPDetectorConstruction::~MUPDetectorConstruction(){ }
@@ -380,6 +380,7 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   fLV05 = logicLV05;
   fLV06 = logicLV06;
   fLV07 = logicLV07;
+  fLV10 = logicLV10;
 
   return physWorld;
 }
