@@ -11,7 +11,7 @@
 MUPSteppingAction::MUPSteppingAction(MUPEventAction* eventAction)
 : G4UserSteppingAction(),
   fEventAction(eventAction),
-  fLV00(0), fLV01(0), fLV02(0), fLV03(0), fLV04(0), fLV05(0), fLV06(0), fLV07(0), fLV10(0)
+  fLV00(0), fLV01(0), fLV02(0), fLV03(0), fLV04(0), fLV05(0), fLV06(0), fLV07(0), fLV08(0), fLV10(0)
 {
  myOUT .open( "out.data" , std::ios::trunc);
  myTPC .open( "tpc.data" , std::ios::trunc);
@@ -24,7 +24,7 @@ MUPSteppingAction::~MUPSteppingAction(){
 //------------------------------------------------------------------------------
 void MUPSteppingAction::UserSteppingAction(const G4Step* step)
 {
-  if ( !fLV00 || !fLV01 || !fLV02 || !fLV03 || !fLV04 || !fLV05 || !fLV06 || !fLV07 || !fLV10 ){
+  if ( !fLV00 || !fLV01 || !fLV02 || !fLV03 || !fLV04 || !fLV05 || !fLV06 || !fLV07 || !fLV08 || !fLV10 ){
     const MUPDetectorConstruction* detectorConstruction
       = static_cast<const MUPDetectorConstruction*>
         (G4RunManager::GetRunManager()->GetUserDetectorConstruction());
@@ -37,6 +37,7 @@ void MUPSteppingAction::UserSteppingAction(const G4Step* step)
     fLV05 = detectorConstruction->GetLV05();
     fLV06 = detectorConstruction->GetLV06();
     fLV07 = detectorConstruction->GetLV07();
+    fLV08 = detectorConstruction->GetLV08();
     fLV10 = detectorConstruction->GetLV10();
   }
 
@@ -55,6 +56,7 @@ void MUPSteppingAction::UserSteppingAction(const G4Step* step)
   if (volume == fLV05) vol = 5 ;
   if (volume == fLV06) vol = 6 ;
   if (volume == fLV07) vol = 7 ; 
+  if (volume == fLV08) vol = 8 ; 
   if (volume == fLV10) vol =10 ; // TPC volume
 
   if ( vol == -1 ) return;
@@ -107,7 +109,7 @@ void MUPSteppingAction::UserSteppingAction(const G4Step* step)
              << tr_post_x << " " << tr_post_y << " " << tr_post_z << " " << g_post_time << " "
              << G4endl;
 
-    if(myOUT.is_open() && vol>-1 && vol<8 && st_id==2 && tr_id==1)
+    if(myOUT.is_open() && vol>-1 && vol<9 && st_id==2 && tr_id==1)
        myOUT << ev_id << " " << vol  << " " << tr_ed << " "
              << tr_x  << " " << tr_y << " " << tr_z  << " " << g_time
              << G4endl;

@@ -15,7 +15,7 @@
 //------------------------------------------------------------------------------
 MUPDetectorConstruction::MUPDetectorConstruction()
 : G4VUserDetectorConstruction(),
-  fLV00(0), fLV01(0), fLV02(0), fLV03(0), fLV04(0), fLV05(0), fLV06(0), fLV07(0), fLV10(0)
+  fLV00(0), fLV01(0), fLV02(0), fLV03(0), fLV04(0), fLV05(0), fLV06(0), fLV07(0), fLV08(0), fLV10(0)
 { }
 //------------------------------------------------------------------------------
 MUPDetectorConstruction::~MUPDetectorConstruction(){ }
@@ -97,6 +97,7 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   // Geometrical parameters of Si layers
   G4double l_xy   = 200.000*mm;
   G4double lSi_z  =   0.250*mm;
+  G4double lSc_z  =  10.000*mm;
   G4double lG10_z =   1.500*mm;
 
   // z-pozitiion of Si layers
@@ -109,6 +110,8 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4double l06_z =  5825.000*mm - 0.5 * lSi_z;
   G4double l07_z =  5900.000*mm - 0.5 * lSi_z;
 
+  G4double lsc_z =   900.000*mm + lSi_z + 50.*mm + 0.5*lSc_z;
+  
   // z-pozitiion of PCB for Si layers
   G4double lG0_z = l00_z - 0.5 * lSi_z - 0.5 * lG10_z;
   G4double lG1_z = l01_z - 0.5 * lSi_z - 0.5 * lG10_z;
@@ -132,7 +135,7 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4double lH2_z =   lUNIT_z*4 ; // 2 anodes (1 cathode in the center)
 
   // 20 atm --> 1.6347 kg/m3
-  G4Material *H2Gas = new G4Material("H2Gas", 1, 1.008*g/mole, 1.6347*kg/m3 );
+  G4Material *H2Gas = new G4Material("H2Gas", 1, 1.008*g/mole, (8.*1.6347/20.)*kg/m3 );
 
 //------------------------------------------
 // Be windows
@@ -199,6 +202,8 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4Box* solidLV06 = new G4Box("LV06", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
   G4Box* solidLV07 = new G4Box("LV07", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSi_z);
 
+  G4Box* solidLV08 = new G4Box("LV08", 0.5*l_Sx, 0.5*l_Sy, 0.5*lSc_z);
+
   G4Box* solidLVG0 = new G4Box("LVG0", 0.5*l_Gx, 0.5*l_Gy, 0.5*lG10_z);
   G4Box* solidLVG1 = new G4Box("LVG1", 0.5*l_Gx, 0.5*l_Gy, 0.5*lG10_z);
   G4Box* solidLVG2 = new G4Box("LVG2", 0.5*l_Gx, 0.5*l_Gy, 0.5*lG10_z);
@@ -243,6 +248,8 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4LogicalVolume* logicLV05 = new G4LogicalVolume(solidLV05 , SiSolid, "LV05");
   G4LogicalVolume* logicLV06 = new G4LogicalVolume(solidLV06 , SiSolid, "LV06");
   G4LogicalVolume* logicLV07 = new G4LogicalVolume(solidLV07 , SiSolid, "LV07");
+
+  G4LogicalVolume* logicLV08 = new G4LogicalVolume(solidLV08 , sci, "LV08");
 
   G4LogicalVolume* logicLVG0 = new G4LogicalVolume(solidLVG0 , G10, "LVG0");
   G4LogicalVolume* logicLVG1 = new G4LogicalVolume(solidLVG1 , G10, "LVG1");
@@ -303,6 +310,8 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4ThreeVector l06_pos; l06_pos.set( 0, 0, l06_z ); // Si 7
   G4ThreeVector l07_pos; l07_pos.set( 0, 0, l07_z ); // Si 8
 
+  G4ThreeVector l08_pos; l08_pos.set( 0, 0, lsc_z ); // Sci
+
   G4ThreeVector lG0_pos; lG0_pos.set( 0, 0, lG0_z ); // PCB 1
   G4ThreeVector lG1_pos; lG1_pos.set( 0, 0, lG1_z ); // PCB 2
   G4ThreeVector lG2_pos; lG2_pos.set( 0, 0, lG2_z ); // PCB 3
@@ -336,6 +345,8 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   new G4PVPlacement(0, l05_pos, logicLV05, "LV05", logicWorld, false, 0, checkOverlaps);
   new G4PVPlacement(0, l06_pos, logicLV06, "LV06", logicWorld, false, 0, checkOverlaps);
   new G4PVPlacement(0, l07_pos, logicLV07, "LV07", logicWorld, false, 0, checkOverlaps);  
+  // Sci
+  new G4PVPlacement(0, l08_pos, logicLV08, "LV08", logicWorld, false, 0, checkOverlaps);  
   // - PCB for carrier board
   new G4PVPlacement(0, lG0_pos, logicLVG0, "LVG0", logicWorld, false, 0, checkOverlaps);
   new G4PVPlacement(0, lG1_pos, logicLVG1, "LVG1", logicWorld, false, 0, checkOverlaps);
@@ -380,6 +391,7 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   fLV05 = logicLV05;
   fLV06 = logicLV06;
   fLV07 = logicLV07;
+  fLV08 = logicLV08;
   fLV10 = logicLV10;
 
   return physWorld;

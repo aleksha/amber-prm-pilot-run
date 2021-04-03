@@ -2,8 +2,10 @@
 
 ## Done
   * Check geometry to have proper pixel detector
-
-## To be done
   * Stepping action for detectors
 
+## To be done
+  * Add scintillators
+  * TPC signal builder
+  * Create beam noise event
 
