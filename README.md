@@ -14,13 +14,17 @@ source ~/miniconda3/etc/profile.d/conda.sh
 conda config --add channels conda-forge
 ```
 
-Second create `Geant4` envoirment:
+Second, create `Geant4` envoirment:
 ```bash
 conda create --name g4-mc geant4 compilers cmake make
 conda activate g4-mc
 ```
 
-Third step is to clone and build `amber-prm-pilot-run` application
+Third, create envoirment for `ESEPP`, `ROOT` and `OstapHEP`.
+Follow this: https://github.com/aleksha/pres-mc
+
+
+Next step is to clone and build `amber-prm-pilot-run` application
 ```bash
 cd # you may want to choose other directory
 git clone https://github.com/aleksha/amber-prm-pilot-run.git
@@ -30,8 +34,9 @@ cd build
 cmake -DGeant4_DIR=/home/adzyuba/miniconda3/envs/g4-mc/lib/Geant4-10.7.1/ ../source
 make -j4
 ```
-As a result an `exec_MUP` application should be compiled. 
-One can use `build_apps.sh` script.
+As a result an `exec_MUP` application should be compiled.
+It uses an input (called `rand_input.txt`), which must be created.
+Follow instructions in `beamfile/README.md`.
 
 You can run it directly from `build/` deirecory or create a specila 
 `run/` place:
@@ -41,3 +46,4 @@ cp exec_MUP run.mac seed ../run
 cd ../run
 ./exec_MUP run.mac >> inLOG
 ```
+One can use `build_apps.sh` and `start.sh` scripts.
