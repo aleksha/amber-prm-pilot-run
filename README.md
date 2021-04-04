@@ -66,3 +66,4 @@ One can use `build_apps.sh` and `start.sh` scripts.
 ## Electronic noise
 
 See information in the `noise` directory.
+The speeded-up version is in use.

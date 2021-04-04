@@ -5,7 +5,9 @@
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.fftpack.rfft.html#scipy.fftpack.rfft
 #===============================================================================
 dump_file_path = "./dump.txt"
-N_EVENTS       = 100000
+n_batches =    10
+n_events  = 10000 # events per batch
+#===============================================================================
 N_CHANNELS     = 2692
 BAN_LEVEL      = 65
 #===============================================================================
@@ -634,8 +636,6 @@ for gev in range(N_EVENTS):
 
 #anode.generate_event()
 from time import time
-n_batches = 10
-n_events = 10000
 
 #out_file = open("noise_events.data","w")
 
@@ -646,7 +646,9 @@ for i in range(n_batches):
     what = np.real ( anode.generate_event(n_events=n_events) )
     print('generation time (s) :', time()-start_time )
 
-
+# ---
+#  This is vwry slow O(n^2)
+# ----
 #    print("Ordering")
 #    start_time = time()
 #    str_list = []

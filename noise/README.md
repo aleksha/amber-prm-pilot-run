@@ -14,7 +14,9 @@ To generate events:
 conda activate pres-mc
 wget http://adzyuba.web.cern.ch/adzyuba/d/dump.txt
 python3 anode_noise.py
+cat temp_*txt > noise.data
+rm temp_*txt
 ```
 
-Generated events will be stored into **_noise_events.data_** file.
+Generated events will be stored into `noise.data` file.
 Each line will contain a ADC value separated by space-character.

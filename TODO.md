@@ -5,10 +5,10 @@
   * Stepping action for detectors
   * Add scintillators
   * ESEPP install guide
+  * Electronic noise simu
 
 ## Updating in progress
   * Setup notes
-  * Electronic noise simu
 
 ## To be done
   * Rename build and run scripts (beam, scat and noise)
