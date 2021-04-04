@@ -53,8 +53,8 @@ As a result an `exec_MUP` application should be compiled.
 It uses an input (called `rand_input.txt`), which must be created.
 Follow instructions in `beamfile/README.md`.
 
-You can run it directly from `build_beam/` deirecory or create a specila 
-`run/` place:
+You can run it directly from `build_beam/` deirecory or create a special 
+`run_beam/` place:
 ```bash
 mkdir ../run_beam
 cp exec_MUP run.mac seed ../run_beam

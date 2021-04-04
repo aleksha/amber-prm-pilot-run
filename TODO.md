@@ -6,12 +6,12 @@
   * Add scintillators
   * ESEPP install guide
   * Electronic noise simu
+  * Rename build and run scripts (beam, scat and noise)
 
 ## Updating in progress
   * Setup notes
 
 ## To be done
-  * Rename build and run scripts (beam, scat and noise)
   * Scattering PrimaryGenerator action
   * TPC signal builder
   * Create beam noise event
