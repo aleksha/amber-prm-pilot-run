@@ -21,7 +21,18 @@ conda activate g4-mc
 ```
 
 Third, create envoirment for `ESEPP`, `ROOT` and `OstapHEP`.
-Follow this: https://github.com/aleksha/pres-mc
+To setup enviorment, please, follow this: https://github.com/aleksha/pres-mc 
+
+It's better to use automatic config version for the `ESEPP`.
+```bash
+git clone https://github.com/nuramatov/esepp.git
+cd esepp
+make
+```
+Edit `config.ini` and run it:
+```bash
+python start.py config.ini
+```
 
 
 Next step is to clone and build `amber-prm-pilot-run` application

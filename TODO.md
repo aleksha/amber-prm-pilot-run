@@ -9,9 +9,11 @@
   * Setup notes
 
 ## To be done
+  * ESEPP install guide
+  * Rename build and run scripts (beam, scat and noise)
+  * Scattering PrimaryGenerator action
   * TPC signal builder
   * Create beam noise event
   * Electronic noise simu
-  * Scattering PrimaryGenerator action
   * Merge event
 
