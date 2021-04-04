@@ -622,9 +622,7 @@ plt.clf()
 
 #anode.create_model_chan( 110 , test_it = True)
 '''
-out_file = open("noise_events.data","w")
 for gev in range(N_EVENTS):
-    real_arr = np.real ( anode.generate_event() )
 #    print(len(real_arr))
     print(gev)
     ss = ""
@@ -632,15 +630,47 @@ for gev in range(N_EVENTS):
         ss += str(tch) + " "
     ss += "\n"
     out_file.write(ss)
-out_file.close()
 '''
 
 #anode.generate_event()
 from time import time
-n_batches = 1
-n_events = 100
+n_batches = 10
+n_events = 10000
 
-start_time = time()
+#out_file = open("noise_events.data","w")
+
 for i in range(n_batches):
-    what = anode.generate_event(n_events=n_events)
-print('events per second:', n_events*n_batches/(time()-start_time))
+
+    print("Generation")
+    start_time = time()
+    what = np.real ( anode.generate_event(n_events=n_events) )
+    print('generation time (s) :', time()-start_time )
+
+
+#    print("Ordering")
+#    start_time = time()
+#    str_list = []
+#    for ev in range(len(what[0])):
+#        str_list.append( str( what[0] ) )
+#    for ch in range(1, len(what)):
+#        for ev in range(len(what[ch])):
+#            str_list[ev] += str( what[ch] )
+#    for ev in range(len(what[0])):
+#        str_list[ev] += "\n"
+#    print('ordering time (s) :', time()-start_time )
+
+    print("Transposing")
+    start_time = time()
+    new_what = np.transpose(what)
+    print('transposing time (s):', time()-start_time )
+
+
+    print("Writing")
+    start_time = time()
+#    for arr in new_what:
+#        out_file.write( np.array2string(arr, separator=' ')[1:-1] + "\n" )
+    np.savetxt("temp_"+str(i)+".txt", new_what, fmt='%1.4e', delimiter=' ', newline='\n')
+    print('writing time (s) :', time()-start_time )
+
+
+#out_file.close()
