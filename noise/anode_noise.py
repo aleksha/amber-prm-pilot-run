@@ -635,12 +635,12 @@ for gev in range(N_EVENTS):
 out_file.close()
 '''
 
-anode.generate_event()
+#anode.generate_event()
 from time import time
-n_batches = 20
-n_events = 5000
+n_batches = 1
+n_events = 100
 
 start_time = time()
 for i in range(n_batches):
-    anode.generate_event(n_events=n_events)
+    what = anode.generate_event(n_events=n_events)
 print('events per second:', n_events*n_batches/(time()-start_time))

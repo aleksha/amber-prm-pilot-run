@@ -23,6 +23,8 @@ conda activate g4-mc
 Third, create envoirment for `ESEPP`, `ROOT` and `OstapHEP`.
 To setup enviorment, please, follow this: https://github.com/aleksha/pres-mc 
 
+# ESEPP preparation
+
 It's better to use automatic config version for the `ESEPP`.
 ```bash
 git clone https://github.com/nuramatov/esepp.git
@@ -31,9 +33,11 @@ make
 ```
 Edit `config.ini` and run it:
 ```bash
+cp ../configs/cinfig.esepp config.ini
 python start.py config.ini
 ```
 
+## Beam noise
 
 Next step is to clone and build `amber-prm-pilot-run` application
 ```bash
@@ -58,3 +62,7 @@ cd ../run
 ./exec_MUP run.mac >> inLOG
 ```
 One can use `build_apps.sh` and `start.sh` scripts.
+
+## Electronic noise
+
+See information in the `noise` directory.
