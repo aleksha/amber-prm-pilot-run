@@ -44,8 +44,8 @@ Next step is to clone and build `amber-prm-pilot-run` application
 cd # you may want to choose other directory
 git clone https://github.com/aleksha/amber-prm-pilot-run.git
 cd amber-prm-pilot-run
-mkdir build
-cd build
+mkdir build_beam
+cd build_beam
 cmake -DGeant4_DIR=/home/adzyuba/miniconda3/envs/g4-mc/lib/Geant4-10.7.1/ ../source
 make -j4
 ```
@@ -53,15 +53,15 @@ As a result an `exec_MUP` application should be compiled.
 It uses an input (called `rand_input.txt`), which must be created.
 Follow instructions in `beamfile/README.md`.
 
-You can run it directly from `build/` deirecory or create a specila 
+You can run it directly from `build_beam/` deirecory or create a specila 
 `run/` place:
 ```bash
-mkdir ../run
-cp exec_MUP run.mac seed ../run
-cd ../run
+mkdir ../run_beam
+cp exec_MUP run.mac seed ../run_beam
+cd ../run_beam
 ./exec_MUP run.mac >> inLOG
 ```
-One can use `build_apps.sh` and `start.sh` scripts.
+One can use `build_beam.sh` and `run_beam.sh` scripts.
 
 ## Electronic noise
 

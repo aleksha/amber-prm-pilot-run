@@ -1,2 +1,2 @@
-rm -rf build/
-rm -rf run*
+rm -rf build_beam/
+rm -rf run_beam/
