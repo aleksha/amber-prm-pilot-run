@@ -38,14 +38,16 @@ for e in in_list:
     direction = ROOT.TVector3(e[4],e[5], cos( asin( sqrt(e[4]**2+e[5]**2) ) ) ).Unit()
     lepton = ROOT.TVector3()
     proton = ROOT.TVector3()
-    lepton.SetMagThetaPhi( sqrt( (0.001*ntp.E_l)**2 - m_l**2 ), ntp.theta_l, ntp.phi_l )
-    proton.SetMagThetaPhi( sqrt( (0.001*ntp.E_p)**2 - m_p**2 ), ntp.theta_p, ntp.phi_p )
+    l_p = sqrt( (0.001*ntp.E_l)**2 - m_l**2 )
+    p_p = sqrt( (0.001*ntp.E_p)**2 - m_p**2 )
+    lepton.SetMagThetaPhi( l_p, ntp.theta_l, ntp.phi_l )
+    proton.SetMagThetaPhi( p_p, ntp.theta_p, ntp.phi_p )
     # transforms v1 from the rotated frame (z' parallel to direction, x' in the theta plane 
     #   and y' in the xy plane as well as perpendicular to the theta plane) to the (x,y,z) frame
-    lepton.RotateUz(direction)
-    proton.RotateUz(direction)
-    esepp_scat_list.append( ( e[0] , X_scat, Y_scat, Z_scat, lepton.X(), lepton.Y(), lepton.Z() ) )
-    esepp_prot_list.append( ( 2212 , X_scat, Y_scat, Z_scat, proton.X(), proton.Y(), proton.Z() ) )
+    lepton.RotateUz(direction).Unit()
+    proton.RotateUz(direction).Unit()
+    esepp_scat_list.append( ( e[0] , X_scat, Y_scat, Z_scat, l_p*lepton.X(), l_p*lepton.Y(), l_p*lepton.Z() ) )
+    esepp_prot_list.append( ( 2212 , X_scat, Y_scat, Z_scat, p_p*proton.X(), p_p*proton.Y(), p_p*proton.Z() ) )
 #===============================================================================
 def list2file( lst, fname ):
     out_file = open( fname ,"w" )
