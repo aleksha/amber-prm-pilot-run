@@ -36,16 +36,7 @@ class PrimaryGenerator : public G4VPrimaryGenerator
     G4double fXpos, fYpos, fZpos;      //solid angle
     double fX, fY, fZ, fAX, fAY, fMom;
     int pcode;
-    G4ParticleDefinition* particleDefGamma    ;
-    G4ParticleDefinition* particleDefMup      ;
-    G4ParticleDefinition* particleDefMum      ;
-    G4ParticleDefinition* particleDefEm       ;
-    G4ParticleDefinition* particleDefEp       ;
-    G4ParticleDefinition* particleDefPim      ;
-    G4ParticleDefinition* particleDefPip      ;
-    G4ParticleDefinition* particleDefProton   ;
-    G4ParticleDefinition* particleDefDeuteron ;
-    G4ParticleDefinition* particleDefAlpha    ;
+
     std::ifstream in_file ;
 
 };
@@ -55,16 +46,6 @@ PrimaryGenerator::PrimaryGenerator()
 : G4VPrimaryGenerator()
 { 
   in_file.open("../beamfile/rand_input.txt", std::ios::in);
-  G4ParticleDefinition* particleDefGamma    = G4ParticleTable::GetParticleTable()->FindParticle("gamma");
-  G4ParticleDefinition* particleDefMup      = G4ParticleTable::GetParticleTable()->FindParticle("mu+");
-  G4ParticleDefinition* particleDefMum      = G4ParticleTable::GetParticleTable()->FindParticle("mu-");
-  G4ParticleDefinition* particleDefEm       = G4ParticleTable::GetParticleTable()->FindParticle("e-");
-  G4ParticleDefinition* particleDefEp       = G4ParticleTable::GetParticleTable()->FindParticle("e+");
-  G4ParticleDefinition* particleDefPim      = G4ParticleTable::GetParticleTable()->FindParticle("pi-");
-  G4ParticleDefinition* particleDefPip      = G4ParticleTable::GetParticleTable()->FindParticle("pi+");
-  G4ParticleDefinition* particleDefProton   = G4ParticleTable::GetParticleTable()->FindParticle("proton");
-  G4ParticleDefinition* particleDefDeuteron = G4ParticleTable::GetParticleTable()->FindParticle("deuteron");  
-  G4ParticleDefinition* particleDefAlpha    = G4ParticleTable::GetParticleTable()->FindParticle("alpha");  
 }
 
 PrimaryGenerator::~PrimaryGenerator()
@@ -76,6 +57,27 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
 {
   in_file  >> pcode >> fX >> fY >> fZ >> fAX >> fAY >> fMom;
 
+    G4ParticleDefinition* particleDefGamma    ;
+    G4ParticleDefinition* particleDefMup      ;
+    G4ParticleDefinition* particleDefMum      ;
+    G4ParticleDefinition* particleDefEm       ;
+    G4ParticleDefinition* particleDefEp       ;
+    G4ParticleDefinition* particleDefPim      ;
+    G4ParticleDefinition* particleDefPip      ;
+    G4ParticleDefinition* particleDefProton   ;
+    G4ParticleDefinition* particleDefDeuteron ;
+    G4ParticleDefinition* particleDefAlpha    ;
+
+  G4ParticleDefinition* particleDefGamma    = G4ParticleTable::GetParticleTable()->FindParticle("gamma");
+  G4ParticleDefinition* particleDefMup      = G4ParticleTable::GetParticleTable()->FindParticle("mu+");
+  G4ParticleDefinition* particleDefMum      = G4ParticleTable::GetParticleTable()->FindParticle("mu-");
+  G4ParticleDefinition* particleDefEm       = G4ParticleTable::GetParticleTable()->FindParticle("e-");
+  G4ParticleDefinition* particleDefEp       = G4ParticleTable::GetParticleTable()->FindParticle("e+");
+  G4ParticleDefinition* particleDefPim      = G4ParticleTable::GetParticleTable()->FindParticle("pi-");
+  G4ParticleDefinition* particleDefPip      = G4ParticleTable::GetParticleTable()->FindParticle("pi+");
+  G4ParticleDefinition* particleDefProton   = G4ParticleTable::GetParticleTable()->FindParticle("proton");
+  G4ParticleDefinition* particleDefDeuteron = G4ParticleTable::GetParticleTable()->FindParticle("deuteron");  
+  G4ParticleDefinition* particleDefAlpha    = G4ParticleTable::GetParticleTable()->FindParticle("alpha");  
   G4PrimaryParticle* particle1;
 
   switch(pcode) {
@@ -90,7 +92,7 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
       break;
     case 13:
       particle1 = new G4PrimaryParticle(particleDefMum);
-      G4cout  << "mu-" << G4endl;
+ //     G4cout  << "mu-" << G4endl;
       break;
     case -13:
       particle1 = new G4PrimaryParticle(particleDefMup);
