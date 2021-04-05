@@ -1,4 +1,4 @@
-rm -rf build_beam
+rm -rf build_g4
 conda deactivate
 conda activate g4-mc
 mkdir build_g4

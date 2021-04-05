@@ -9,12 +9,13 @@
   * Rename build and run scripts (beam, scat and noise)
   * Scattering PrimaryGenerator action (pcode)
   * Change ideology for a `Geant4` app
+  * Seeds management
+  * mac-files mannagement
 
 ## Updating in progress
   * Setup notes
 
 ## To be done
-  * Seeds management
   * Scattering event generator
   * TPC signal builder
   * Create beam noise event

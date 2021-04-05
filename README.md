@@ -5,6 +5,9 @@ for an AMBER PRM pilot run.
 
 ## Software setup
 
+
+### Enviorment
+
 This project is tested with `conda` package solution.
 First one have to setup and configure `conda`:
 ```bash
@@ -23,6 +26,8 @@ conda activate g4-mc
 Third, create envoirment for `ESEPP`, `ROOT` and `OstapHEP`.
 To setup enviorment, please, follow this: https://github.com/aleksha/pres-mc 
 
+### Get source of the project
+
 Now, let's get the project:
 ```bash
 cd # you may want to choose other directory
@@ -30,7 +35,7 @@ git clone https://github.com/aleksha/amber-prm-pilot-run.git
 cd amber-prm-pilot-run
 ```
 
-# ESEPP preparation
+### ESEPP preparation
 
 It's better to use automatic config version for the `ESEPP`.
 ```bash
@@ -47,15 +52,11 @@ python start.py config.ini
 ## Full event
 
 The idea is to create events, which contains:
-  1. Elastic scattering 
-    - initial particle
-    - scattered particle
-    - recoil proton
+  1. Elastic scattering ( initial particle / scattered particle /  recoil proton )
   2. Beam noise (for certain beam frequency)
   3. Electronic noise
 
 First as well as second step are done with a `Geant4` application.
-
 The third is done with a `python` application. 
 
 ### Build `Geant4` app
