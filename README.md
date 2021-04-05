@@ -74,7 +74,7 @@ You can use a `build_g4.sh` script to do this.
 **Note:** that this application always needs an `input_g4.txt` file with
 particles to trace!
 
-### Beam noise
+### Beam noise and scattering event
 
 Next step is to run application for a beam noise.
 It uses an input file, which must be created.
@@ -82,6 +82,13 @@ Follow instructions in `beamfile/README.md`.
 
 Please, use `run_beam.sh` script to create particles, which will be later
 used for the beam noise production.
+
+To create three scattering particles see `scattering/` directory.
+After input files will be created, please, use
+`run_init.sh`, `run_scat.sh` and `run_prot.sh` scripts.
+
+**Note:** initial lepton goes backward in time (this will be 
+accounted on the reco-stage).
 
 ### Electronic noise
 

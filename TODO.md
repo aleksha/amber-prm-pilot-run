@@ -11,13 +11,14 @@
   * Change ideology for a `Geant4` app
   * Seeds management
   * mac-files mannagement
+  * Scattering event generator
 
 ## Updating in progress
   * Setup notes
 
 ## To be done
-  * Scattering event generator
   * TPC signal builder
+  * Hits accounting
   * Create beam noise event
   * Merge event
 
