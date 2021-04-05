@@ -68,6 +68,8 @@ make -j4
 ```
 As a result an `exec_MUP` application should be compiled.
 
+You can use a `build_g4.sh` script to do this.
+
 **Note:** that this application always needs an `input_g4.txt` file with
 particles to trace!
 
