@@ -90,7 +90,7 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
       break;
     case 13:
       particle1 = new G4PrimaryParticle(particleDefMum);
-      G4cout  << "mu-" << G4endl
+      G4cout  << "mu-" << G4endl;
       break;
     case -13:
       particle1 = new G4PrimaryParticle(particleDefMup);
