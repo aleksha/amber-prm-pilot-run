@@ -116,7 +116,7 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
   
   
   G4double p_mu = fMom*GeV;
-  fXpos = fX*mm;  fYpos = fY*mm;  fZpos = fZ;
+  fXpos = fX*mm;  fYpos = fY*mm;  fZpos = fZ*mm;
   G4ThreeVector positionB( fXpos, fYpos, fZpos );
 
   particle1->SetMomentum( 0.001*fAX*p_mu, 0.001*fAY*p_mu, p_mu );
