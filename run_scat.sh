@@ -1,9 +1,9 @@
-mkdir run_beam
-cp -v beamfile/rand_input.txt run_beam/input_g4.txt
-cp -v build_g4/exec_MUP run_beam/
-cp -v configs/mac/run_beam.mac run_beam/run.mac
-cp -v configs/seeds/seed_beam run_beam/seed
-cd run_beam
-echo "Starting beam app"
+mkdir run_scat
+cp -v scattering/scat_input.txt run_scat/input_g4.txt
+cp -v build_g4/exec_MUP run_scat/
+cp -v configs/mac/run_scat.mac run_scat/run.mac
+cp -v configs/seeds/seed_scat run_scat/seed
+cd run_scat
+echo "Starting scat lepton tracingp"
 ./exec_MUP run.mac >> inLOG
 echo "Done! (see inLOG for details)"
