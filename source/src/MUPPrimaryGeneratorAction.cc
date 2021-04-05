@@ -35,7 +35,17 @@ class PrimaryGenerator : public G4VPrimaryGenerator
   private:
     G4double fXpos, fYpos, fZpos;      //solid angle
     double fX, fY, fAX, fAY, fMom;
-
+    int pcode;
+    G4ParticleDefinition* particleDefGamma    ;
+    G4ParticleDefinition* particleDefMup      ;
+    G4ParticleDefinition* particleDefMum      ;
+    G4ParticleDefinition* particleDefEm       ;
+    G4ParticleDefinition* particleDefEp       ;
+    G4ParticleDefinition* particleDefPim      ;
+    G4ParticleDefinition* particleDefPip      ;
+    G4ParticleDefinition* particleDefProton   ;
+    G4ParticleDefinition* particleDefDeuteron ;
+    G4ParticleDefinition* particleDefAlpha    ;
     std::ifstream in_file ;
 
 };
@@ -45,6 +55,16 @@ PrimaryGenerator::PrimaryGenerator()
 : G4VPrimaryGenerator()
 { 
   in_file.open("../beamfile/rand_input.txt", std::ios::in);
+  G4ParticleDefinition* particleDefGamma    = G4ParticleTable::GetParticleTable()->FindParticle("gamma");
+  G4ParticleDefinition* particleDefMup      = G4ParticleTable::GetParticleTable()->FindParticle("mu+");
+  G4ParticleDefinition* particleDefMum      = G4ParticleTable::GetParticleTable()->FindParticle("mu-");
+  G4ParticleDefinition* particleDefEm       = G4ParticleTable::GetParticleTable()->FindParticle("e-");
+  G4ParticleDefinition* particleDefEp       = G4ParticleTable::GetParticleTable()->FindParticle("e+");
+  G4ParticleDefinition* particleDefPim      = G4ParticleTable::GetParticleTable()->FindParticle("pi-");
+  G4ParticleDefinition* particleDefPip      = G4ParticleTable::GetParticleTable()->FindParticle("pi+");
+  G4ParticleDefinition* particleDefProton   = G4ParticleTable::GetParticleTable()->FindParticle("proton");
+  G4ParticleDefinition* particleDefDeuteron = G4ParticleTable::GetParticleTable()->FindParticle("deuteron");  
+  G4ParticleDefinition* particleDefAlpha    = G4ParticleTable::GetParticleTable()->FindParticle("alpha");  
 }
 
 PrimaryGenerator::~PrimaryGenerator()
@@ -54,46 +74,57 @@ PrimaryGenerator::~PrimaryGenerator()
 
 void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
 {
-  in_file  >> fX >> fY >> fAX >> fAY >> fMom;
-//  G4ParticleDefinition* particleDefMu = G4ParticleTable::GetParticleTable()->FindParticle("mu-");
-  G4ParticleDefinition* particleDefMu = G4ParticleTable::GetParticleTable()->FindParticle("mu+");
+  in_file  >> pcode >> fX >> fY >> fZ >> fAX >> fAY >> fMom;
 
   G4PrimaryParticle* particle1;
-//  G4PrimaryParticle* particle2;
 
-  particle1 = new G4PrimaryParticle(particleDefMu);
-//  particle2 = new G4PrimaryParticle(particleDefMu);
-
+  switch(pcode) {
+    case 22:
+      particle1 = new G4PrimaryParticle(particleDefGamma);
+      break;    
+    case 11:
+      particle1 = new G4PrimaryParticle(particleDefEm);
+      break;
+    case -11:
+      particle1 = new G4PrimaryParticle(particleDefEp);
+      break;
+    case 13:
+      particle1 = new G4PrimaryParticle(particleDefMum);
+      break;
+    case -13:
+      particle1 = new G4PrimaryParticle(particleDefMup);
+      break;
+    case -211:
+      particle1 = new G4PrimaryParticle(particleDefPim);
+      break;
+    case 211:
+      particle1 = new G4PrimaryParticle(particleDefPip);
+      break;
+    case 2212:
+      particle1 = new G4PrimaryParticle(particleDefProton);
+      break;    
+    case 1000010020:
+      particle1 = new G4PrimaryParticle(particleDefDeuteron);
+      break;
+    case 1000020040:
+      particle1 = new G4PrimaryParticle(particleDefAlpha);
+      break;
+    default:
+      particle1 = new G4PrimaryParticle(particleDefMum);
+      break;    
+  }
+  
+  
   G4double p_mu = fMom*GeV;
-
- G4double pos  = -6299.0*mm; // for reso
-//  G4double pos  = 1075.0*mm; // for reso
-// G4double pos  =  -885.0*mm; // for thetaX LONG
-// G4double pos  =  -(885.0-425.0)*mm; // for thetaX SHORT
-//   G4double pos  =   790.0*mm; //
-// G4double pos  =   750.0*mm; //
-
-//  double theta = 0.0;
-//  double theta = 0.00011;
-//  double theta = 0.00033;
-//  double theta = 0.002;
-
-  fXpos = fX*mm;  fYpos = fY*mm;  fZpos = pos;
-
+  fXpos = fX*mm;  fYpos = fY*mm;  fZpos = fZ;
   G4ThreeVector positionB( fXpos, fYpos, fZpos );
-//  G4ThreeVector positionB( 0, 20.0*mm, pos ); // check edge of Be window
-//  G4ThreeVector positionB( 0, 29.0*mm, pos ); // check edge of Be window
 
   particle1->SetMomentum( 0.001*fAX*p_mu, 0.001*fAY*p_mu, p_mu );
-//  particle1->SetMomentum( 0, theta*p_mu,  p_mu );
-//  particle2->SetMomentum( 0,          0, -p_mu );
 
   G4PrimaryVertex* vertexB = new G4PrimaryVertex(positionB, 0);
-
   vertexB->SetPrimary(particle1);
-//  vertexB->SetPrimary(particle2);
-  event->AddPrimaryVertex(vertexB);
 
+  event->AddPrimaryVertex(vertexB);
 }
 
 //------------------------------------------------------------------------------
