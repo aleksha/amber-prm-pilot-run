@@ -19,8 +19,8 @@ while ev<EVENTS:
     ss += str(tree.X) + " "
     ss += str(tree.Y) + " "
     ss += "-6299.0 "
-    ss += str(tree.dXdZ) + " "
-    ss += str(tree.dYdZ) + " "
+    ss += str(0.001*tree.dXdZ*tree.P) + " "
+    ss += str(0.001*tree.dYdZ*tree.P) + " "
     ss += str(tree.P) + "\n"
     out_file.write( ss )
     ev+=1

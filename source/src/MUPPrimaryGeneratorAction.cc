@@ -33,8 +33,9 @@ class PrimaryGenerator : public G4VPrimaryGenerator
     virtual void GeneratePrimaryVertex(G4Event*);
 
   private:
-    G4double fXpos, fYpos, fZpos;      //solid angle
-    double fX, fY, fZ, fAX, fAY, fMom;
+    G4double fXpos, fYpos, fZpos;      // position
+    G4double fXmom, fYmom, fZmom;      // momentum projections
+    double fX, fY, fZ, fXp, fYp, fZp;
     int pcode;
 
     std::ifstream in_file ;
@@ -55,7 +56,7 @@ PrimaryGenerator::~PrimaryGenerator()
 
 void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
 {
-  in_file  >> pcode >> fX >> fY >> fZ >> fAX >> fAY >> fMom;
+  in_file  >> pcode >> fX >> fY >> fZ >> fXp >> fYp >> fZp;
 
   G4ParticleDefinition* particleDefGamma    = G4ParticleTable::GetParticleTable()->FindParticle("gamma");
   G4ParticleDefinition* particleDefMup      = G4ParticleTable::GetParticleTable()->FindParticle("mu+");
@@ -107,11 +108,11 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
   }
   
   
-  G4double p_mu = fMom*GeV;
-  fXpos = fX*mm;  fYpos = fY*mm;  fZpos = fZ*mm;
+  fXmom = fXp*GeV; fYmom = fYp*GeV; fZmom = fZp*GeV;
+  fXpos = fX*mm;   fYpos = fY*mm;   fZpos = fZ*mm;
   G4ThreeVector positionB( fXpos, fYpos, fZpos );
 
-  particle1->SetMomentum( 0.001*fAX*p_mu, 0.001*fAY*p_mu, p_mu );
+  particle1->SetMomentum( fXmom, fYmom, fZmom );
 
   G4PrimaryVertex* vertexB = new G4PrimaryVertex(positionB, 0);
   vertexB->SetPrimary(particle1);
