@@ -103,7 +103,7 @@ void MUPSteppingAction::UserSteppingAction(const G4Step* step)
     double tr_z   =  0.5 * (tr_pre_z + tr_post_z);
     double g_time =  0.5 * (g_pre_time + g_post_time);
 
-    if(myTPC.is_open() && vol==10 && st_id==2)
+    if(myTPC.is_open() && vol==10 && tr_ed>0)
        myTPC << ev_id     << " " << vol       << " " << tr_ed     << " "
              << tr_pre_x  << " " << tr_pre_y  << " " << tr_pre_z  << " " << g_pre_time  << " "
              << tr_post_x << " " << tr_post_y << " " << tr_post_z << " " << g_post_time << " "
