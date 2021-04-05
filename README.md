@@ -23,6 +23,13 @@ conda activate g4-mc
 Third, create envoirment for `ESEPP`, `ROOT` and `OstapHEP`.
 To setup enviorment, please, follow this: https://github.com/aleksha/pres-mc 
 
+Now, let's get the project:
+```bash
+cd # you may want to choose other directory
+git clone https://github.com/aleksha/amber-prm-pilot-run.git
+cd amber-prm-pilot-run
+```
+
 # ESEPP preparation
 
 It's better to use automatic config version for the `ESEPP`.
@@ -37,33 +44,43 @@ cp ../configs/cinfig.esepp config.ini
 python start.py config.ini
 ```
 
-## Beam noise
+## Full event
 
-Next step is to clone and build `amber-prm-pilot-run` application
+The idea is to create events, which contains:
+  1. Elastic scattering 
+    - initial particle
+    - scattered particle
+    - recoil proton
+  2. Beam noise (for certain beam frequency)
+  3. Electronic noise
+
+First as well as second step are done with a `Geant4` application.
+
+The third is done with a `python` application. 
+
+### Build `Geant4` app
+
 ```bash
-cd # you may want to choose other directory
-git clone https://github.com/aleksha/amber-prm-pilot-run.git
-cd amber-prm-pilot-run
-mkdir build_beam
-cd build_beam
+mkdir build_g4
+cd build_g4
 cmake -DGeant4_DIR=/home/adzyuba/miniconda3/envs/g4-mc/lib/Geant4-10.7.1/ ../source
 make -j4
 ```
 As a result an `exec_MUP` application should be compiled.
-It uses an input (called `rand_input.txt`), which must be created.
+
+**Note:** that this application always needs an `input_g4.txt` file with
+particles to trace!
+
+### Beam noise
+
+Next step is to run application for a beam noise.
+It uses an input file, which must be created.
 Follow instructions in `beamfile/README.md`.
 
-You can run it directly from `build_beam/` deirecory or create a special 
-`run_beam/` place:
-```bash
-mkdir ../run_beam
-cp exec_MUP run.mac seed ../run_beam
-cd ../run_beam
-./exec_MUP run.mac >> inLOG
-```
-One can use `build_beam.sh` and `run_beam.sh` scripts.
+Please, use `run_beam.sh` script to create particles, which will be later
+used for the beam noise production.
 
-## Electronic noise
+### Electronic noise
 
 See information in the `noise` directory.
 The speeded-up version is in use.

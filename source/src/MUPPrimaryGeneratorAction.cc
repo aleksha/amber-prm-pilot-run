@@ -45,7 +45,7 @@ class PrimaryGenerator : public G4VPrimaryGenerator
 PrimaryGenerator::PrimaryGenerator()
 : G4VPrimaryGenerator()
 { 
-  in_file.open("../beamfile/rand_input.txt", std::ios::in);
+  in_file.open("input_g4.txt", std::ios::in);
 }
 
 PrimaryGenerator::~PrimaryGenerator()
