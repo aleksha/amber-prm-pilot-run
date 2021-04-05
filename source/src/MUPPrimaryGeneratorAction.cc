@@ -95,6 +95,7 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
       break;
     case 2212:
       particle1 = new G4PrimaryParticle(particleDefProton);
+      G4cout  << "p+" << G4endl;
       break;    
     case 1000010020:
       particle1 = new G4PrimaryParticle(particleDefDeuteron);
