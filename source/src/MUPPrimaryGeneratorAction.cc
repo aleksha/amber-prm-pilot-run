@@ -57,17 +57,6 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
 {
   in_file  >> pcode >> fX >> fY >> fZ >> fAX >> fAY >> fMom;
 
-    G4ParticleDefinition* particleDefGamma    ;
-    G4ParticleDefinition* particleDefMup      ;
-    G4ParticleDefinition* particleDefMum      ;
-    G4ParticleDefinition* particleDefEm       ;
-    G4ParticleDefinition* particleDefEp       ;
-    G4ParticleDefinition* particleDefPim      ;
-    G4ParticleDefinition* particleDefPip      ;
-    G4ParticleDefinition* particleDefProton   ;
-    G4ParticleDefinition* particleDefDeuteron ;
-    G4ParticleDefinition* particleDefAlpha    ;
-
   G4ParticleDefinition* particleDefGamma    = G4ParticleTable::GetParticleTable()->FindParticle("gamma");
   G4ParticleDefinition* particleDefMup      = G4ParticleTable::GetParticleTable()->FindParticle("mu+");
   G4ParticleDefinition* particleDefMum      = G4ParticleTable::GetParticleTable()->FindParticle("mu-");
