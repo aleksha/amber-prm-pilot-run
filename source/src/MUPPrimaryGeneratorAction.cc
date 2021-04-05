@@ -114,6 +114,7 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
   G4ThreeVector positionB( fXpos, fYpos, fZpos );
 
   particle1->SetMomentum( fXmom, fYmom, fZmom );
+  G4cout  << particle1->GetMass() << " " << particle1->GetKineticEnergy()  << G4endl;
 
   G4PrimaryVertex* vertexB = new G4PrimaryVertex(positionB, 0);
   vertexB->SetPrimary(particle1);
