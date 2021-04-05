@@ -132,9 +132,10 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
 
   G4double lUNIT_z   = 400.0*mm; // length of one TPC unit
 
-  G4double lH2_z =   lUNIT_z*4 ; // 2 anodes (1 cathode in the center)
+  G4double lH2_z =   lUNIT_z*2 ; // 2 anodes (1 cathode in the center)
 
   // 20 atm --> 1.6347 kg/m3
+  // 8 atm for pilot run
   G4Material *H2Gas = new G4Material("H2Gas", 1, 1.008*g/mole, (8.*1.6347/20.)*kg/m3 );
 
 //------------------------------------------
@@ -175,14 +176,14 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4double lW_z  = (3.14159265*0.05*0.05) * mm; // grid 1 mm / step, diameter 100um / 1 direction
 //  G4double lW_z  = (3.14159265*0.025*0.025) * mm; // grid 1 mm / step, diameter 100um / 1 direction
 
-  G4double l40_z = -0.25*lH2_z + 0.5*lKa_z                ;
-  G4double l41_z =  0.25*lH2_z - 0.5*lKa_z                ;
+  G4double l40_z = -0.5*lH2_z + 0.5*lKa_z                ;
+  G4double l41_z =  0.5*lH2_z - 0.5*lKa_z                ;
 
-  G4double l50_z = -0.25*lH2_z + lKa_z + 0.5*lCu_z                ;
-  G4double l51_z =  0.25*lH2_z - lKa_z - 0.5*lCu_z                ;
+  G4double l50_z = -0.5*lH2_z + lKa_z + 0.5*lCu_z                ;
+  G4double l51_z =  0.5*lH2_z - lKa_z - 0.5*lCu_z                ;
 
-  G4double l60_z = -0.25*lH2_z + lKa_z + lCu_z + lGAP_z + 0.5*lW_z                ;
-  G4double l61_z =  0.25*lH2_z - lKa_z - lCu_z - lGAP_z - 0.5*lW_z                ;
+  G4double l60_z = -0.5*lH2_z + lKa_z + lCu_z + lGAP_z + 0.5*lW_z                ;
+  G4double l61_z =  0.5*lH2_z - lKa_z - lCu_z - lGAP_z - 0.5*lW_z                ;
 
   G4double l70_z =  0.0*mm; // Just one cathode in the center of TPC
 
