@@ -34,7 +34,7 @@ class PrimaryGenerator : public G4VPrimaryGenerator
 
   private:
     G4double fXpos, fYpos, fZpos;      //solid angle
-    double fX, fY, fAX, fAY, fMom;
+    double fX, fY, fZ, fAX, fAY, fMom;
     int pcode;
     G4ParticleDefinition* particleDefGamma    ;
     G4ParticleDefinition* particleDefMup      ;
