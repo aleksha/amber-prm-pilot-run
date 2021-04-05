@@ -6,4 +6,5 @@ cp -v configs/seeds/seed_beam run_beam/seed
 cd run_beam
 echo "Starting beam app"
 ./exec_MUP run.mac >> inLOG
-echo "Done! (see inLOG for details)"
+echo "Done! (see run_beam/inLOG for details)"
+cd ../
