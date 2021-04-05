@@ -47,7 +47,7 @@ for e in in_list:
     lepton.RotateUz(direction)
     proton.RotateUz(direction)
     lpt = l_p*lepton.Unit()
-    prt = p_p*lepton.Unit()
+    prt = p_p*proton.Unit()
     esepp_scat_list.append( ( e[0] , X_scat, Y_scat, Z_scat, lpt.X(), lpt.Y(), lpt.Z() ) )
     esepp_prot_list.append( ( 2212 , X_scat, Y_scat, Z_scat, prt.X(), prt.Y(), prt.Z() ) )
 #===============================================================================
