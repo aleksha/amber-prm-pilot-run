@@ -44,10 +44,12 @@ for e in in_list:
     proton.SetMagThetaPhi( p_p, ntp.theta_p, ntp.phi_p )
     # transforms v1 from the rotated frame (z' parallel to direction, x' in the theta plane 
     #   and y' in the xy plane as well as perpendicular to the theta plane) to the (x,y,z) frame
-    lepton.RotateUz(direction).Unit()
-    proton.RotateUz(direction).Unit()
-    esepp_scat_list.append( ( e[0] , X_scat, Y_scat, Z_scat, l_p*lepton.X(), l_p*lepton.Y(), l_p*lepton.Z() ) )
-    esepp_prot_list.append( ( 2212 , X_scat, Y_scat, Z_scat, p_p*proton.X(), p_p*proton.Y(), p_p*proton.Z() ) )
+    lepton.RotateUz(direction)
+    proton.RotateUz(direction)
+    lpt = l_p*lepton.Unit()
+    prt = p_p*lepton.Unit()
+    esepp_scat_list.append( ( e[0] , X_scat, Y_scat, Z_scat, lpt.X(), lpt.Y(), lpt.Z() ) )
+    esepp_prot_list.append( ( 2212 , X_scat, Y_scat, Z_scat, prt.X(), prt.Y(), prt.Z() ) )
 #===============================================================================
 def list2file( lst, fname ):
     out_file = open( fname ,"w" )
