@@ -14,7 +14,8 @@
   * Scattering event generator
   * Shell scripts to `scripts/`
   * Add .gitignore
-  * 'docs/' dir
+  * `docs/` dir
+  * `./prm` bash application
 
 ## Updating in progress
   * Setup notes

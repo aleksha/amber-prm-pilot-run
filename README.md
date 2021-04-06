@@ -96,6 +96,12 @@ source scripts/run_scat.sh
 source scripts/run_prot.sh
 ```
 
+You can also use `./prm` shell app.
+```bash
+./prm build
+./prm run-all
+./prm clean
+```
 
 **Note:** initial lepton goes backward in time (this will be 
 accounted on the reco-stage).

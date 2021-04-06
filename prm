@@ -1,0 +1,23 @@
+#!/bin/bash
+echo "Command: $1";
+
+# ----- build cmd ----
+if [ $1 = build ]
+then
+    source scripts/build_g4.sh;
+fi
+
+# ----- clean run-all ----
+if [ $1 = run-all ]
+then
+    source scripts/run_beam.sh;
+    source scripts/run_init.sh;
+    source scripts/run_scat.sh;
+    source scripts/run_prot.sh;
+fi
+
+# ----- clean cmd ----
+if [ $1 = clean ]
+then
+    source scripts/clean.sh;
+fi

@@ -4,7 +4,7 @@ cp -v build_g4/exec_MUP run_scat/
 cp -v configs/mac/run_scat.mac run_scat/run.mac
 cp -v configs/seeds/seed_scat run_scat/seed
 cd run_scat
-echo "Starting scat lepton tracingp"
+echo "\nStarting scat lepton tracking\n"
 ./exec_MUP run.mac >> inLOG
 echo "Done! (see run_scat/inLOG for details)"
 cd ../
