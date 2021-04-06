@@ -12,6 +12,7 @@
   * Seeds management
   * mac-files mannagement
   * Scattering event generator
+  * Shell scripts to `scripts/`
 
 ## Updating in progress
   * Setup notes

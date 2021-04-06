@@ -5,7 +5,6 @@ for an AMBER PRM pilot run.
 
 ## Software setup
 
-
 ### Enviorment
 
 This project is tested with `conda` package solution.
@@ -70,6 +69,9 @@ make -j4
 As a result an `exec_MUP` application should be compiled.
 
 You can use a `build_g4.sh` script to do this.
+```bash
+source scripts/build_g4.sh
+```
 
 **Note:** that this application always needs an `input_g4.txt` file with
 particles to trace!
@@ -86,6 +88,14 @@ used for the beam noise production.
 To create three scattering particles see `scattering/` directory.
 After input files will be created, please, use
 `run_init.sh`, `run_scat.sh` and `run_prot.sh` scripts.
+
+```bash
+source scripts/run_beam.sh
+source scripts/run_init.sh
+source scripts/run_scat.sh
+source scripts/run_prot.sh
+```
+
 
 **Note:** initial lepton goes backward in time (this will be 
 accounted on the reco-stage).
