@@ -13,6 +13,8 @@
   * mac-files mannagement
   * Scattering event generator
   * Shell scripts to `scripts/`
+  * Add .gitignore
+  * 'docs/' dir
 
 ## Updating in progress
   * Setup notes
