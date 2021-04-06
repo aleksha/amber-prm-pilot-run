@@ -22,6 +22,7 @@
   * Setup notes
 
 ## To be done
+  * Add frozen version of ESEPP
   * TPC signal builder
   * Hits accounting
   * Create beam noise event
