@@ -16,6 +16,7 @@
   * Add .gitignore
   * `docs/` dir
   * `./prm` bash application
+  * noise commands to `./prm`
 
 ## Updating in progress
   * Setup notes
