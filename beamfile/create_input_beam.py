@@ -15,7 +15,7 @@ while ev<EVENTS:
     if USE_CORE:
         while tree.particleFlag!=2:
             tree.GetEntry( ROOT.gRandom.Integer(length) )
-    ss  = "13 "
+    ss  = str( ev )   + " 13 "
     ss += str(tree.X) + " "
     ss += str(tree.Y) + " "
     ss += "-6299.0 "
