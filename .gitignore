@@ -6,6 +6,11 @@
 # Prerequisites
 *.d
 
+### ESEPP ###
+# Prerequisites
+*.root
+*.info
+
 # Compiled Object files
 *.slo
 *.lo
