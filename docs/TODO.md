@@ -18,7 +18,9 @@
   * `./prm` bash application
   * noise commands to `./prm`
   * Add frozen version of ESEPP
-  
+  * TPC geometry check
+
+
 ## Updating in progress
   * Setup notes
 
