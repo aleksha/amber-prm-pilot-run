@@ -75,7 +75,7 @@ int get_pad2(double x, double y){
 }
 
 
-void fast( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
+void fast( float z_anod  = -390., bool backwd = True, int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
 
   double I_av = 36.5*0.001*0.001; // MeV --> 36.5 eV to create e-ion pair
   int N_e;
@@ -86,7 +86,7 @@ void fast( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
   double l, X, Y, Z, t_anod, d_anod;
 
   double W1 = 4.0*0.001; // mm/ns
-  double z_anod = 0.;
+  
 
 //==============================================================================
 // read digitization
@@ -97,10 +97,7 @@ void fast( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
   double digi,tt;
 
   std::ifstream fDIGI("./DigiC.txt" , std::ios::in);
-
-  while( fDIGI >> channel >> digi ){
-    Digi[channel]=digi;
-  }
+  while( fDIGI >> channel >> digi ) Digi[channel]=digi;
   fDIGI.close();
 
 //==============================================================================
@@ -123,8 +120,8 @@ void fast( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
 
     int EvtCntr=0;
 
-    std::ifstream fOUT("./out.data" , std::ios::in);
-    std::ifstream fNOI("/home/geant/Data/Noise/MERGED/noise.data" , std::ios::in);
+    std::ifstream fOUT("../run_prot/out.data" , std::ios::in);
+    std::ifstream fNOI("../noise/noise.data"  , std::ios::in);
 
     TString pFADC,pDIFF,pTEMP,pDEMP;
     TString pdDIFF, psDIFF;
@@ -359,9 +356,7 @@ void fast( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
             double ll = 1000.*sqrt(pow(xf-xi,2)+pow(yf-yi,2)+pow(zf-zi,2));
             Nsub = int(N_e/Ne_MAX);  if(Nsub < int(ll/Ll_MAX)) Nsub = int(ll/Ll_MAX);
             if(Nsub<1) Nsub=1;
-//            double llr = 1000.*sqrt(pow(xf-xi,2)+pow(yf-yi,2));
-//            double llz = 1000.*(zf-zi);
-//            std::cout << ev << "\t" << N_e << "\t" << llr << "\t" << llz << "\n";
+
             if(N_e>0){
                 dx = (xf-xi)/Nsub;
                 dy = (yf-yi)/Nsub;
@@ -381,13 +376,6 @@ void fast( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
                       t_anod = (t + (z-z_anod-10.) / W1 ) ;
                       d_anod = (t + (z+gRandom->Gaus(0,0.08*sqrt(z/10.))-z_anod-10.) / W1 ) ;
                       tt = 20;
-//                      hFADC[fpad]->Fill(t_anod, Calib);
-//                      hFADC[fpad]->Fill(t_anod, Calib);
-//                      for(int iii = 0 ; iii<33; iii++  ){
-//                          hFADC[fpad]->Fill(t_anod + tt, Calib/33.);
-//                          hDIFF[dpad]->Fill(d_anod + tt, Calib/33.);
-//                          tt = tt + 40 ;
-//                      }
 
                       for(int iii = 0 ; iii<125; iii++  ){
                           hFADC[fpad]->Fill(t_anod + tt, Calib*Digi[iii]*N_e/Nsub);
@@ -422,120 +410,6 @@ void fast( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
     }
     canv->Close();
 
-/*
-    TCanvas* canvD = new TCanvas("canvD","canvD",1200,300);
-    gStyle->SetOptStat(0);
-    for(int p=0;p<9;p++){
-        dDIFF[p]->Draw();
-        if(p<10){pFADC.Form("dFADS_0%d.png",p);}
-        else{ pFADC.Form("dFADS_%d.png",p);}
-        canvD->Print( pFADC );
-    }
-    canvD->Close();
-
-
-    TFile* f = new TFile("AllPads.root","RECREATE");
-    for(int p=0;p<9;p++){
-        hFADC[p]->Write();
-        hDIFF[p]->Write();
-    }
-    f->Write();
-    f->Close();
-*/
-    TCanvas* canvT = new TCanvas("canvT","canvT",800,600);
-    gStyle->SetOptStat(0);
-    for(int p=0;p<9;p++){
-        tMax[p]  ->SetLineColor(2);
-        tStart[p]->SetLineColor(4);
-        tMax[p]  ->SetFillColor(2);
-        tStart[p]->SetFillColor(4);
-        tMax[p]  ->SetFillStyle(3004);
-        tStart[p]->SetFillStyle(3005);
-//        tStart[p]->Draw();
-        tMax[p]->Draw();
-//        tMax[p]->Draw("same");
-        tStart[p]->Draw("same");
-        std::cout << "Pad " << p << "\t" << tMax[p]->GetMean() << "\t" << tStart[p]->GetMean() << std::endl;
-        std::cout << "Pad  \t"           << tMax[p]->GetRMS()  << "\t" << tStart[p]->GetRMS()  << std::endl;
-        if(p<10){pFADC.Form("Time_0%d.png",p);}
-        else{ pFADC.Form("Time_%d.png",p);}
-        canvT->Print( pFADC );
-        tEnergy[p]->Draw();
-        if(p<10){pFADC.Form("Energy_0%d.png",p);}
-        else{ pFADC.Form("Energy_%d.png",p);}
-        std::cout << "Pad  \t"  << tEnergy[p]->GetMean()  << "\t" << tEnergy[p]->GetRMS()  << std::endl;
-        canvT->Print( pFADC );
-    }
-    tTotal->Draw();
-    canvT->Print( "TotalEnergy.png" );
-    tMeV->Draw();
-    canvT->Print( "TotalEnergyMeV.png" );
-    tA2->Draw();
-    tA3->Draw("same");
-    canvT->Print( "TotalEnergyMeV23.png" );
-    tA3->Draw();
-    tA4->Draw("same");
-    canvT->Print( "TotalEnergyMeV34.png" );
-    tA4->Draw();
-    tA5->Draw("same");
-    canvT->Print( "TotalEnergyMeV45.png" );
-    canvT->Close();
-/*
-    TGraph* gp = new TGraph(Evts,cp,fp);
-    TGraph* gc = new TGraph(Evts,mp,fp);
-    TGraph* ge = new TGraph(Evts,ep,fp);
-    gp->SetMarkerStyle(20);
-    gc->SetMarkerStyle(24);
-    ge->SetMarkerStyle(21);
-    gp->SetTitle("Central vs 1st pad");
-    gc->SetTitle("Pad 1: start vs peak");
-    ge->SetTitle("Pad 1: start vs length");
-    TCanvas* canvS = new TCanvas("canvS","canvS",800,800);
-    gStyle->SetOptStat(0);
-    gp->Draw("ap");
-    canvS->Print( "Scatter_0vs1.png" );
-    gc->Draw("ap");
-    canvS->Print( "Corr_PEAKvsSTART.png" );
-    ge->Draw("ap");
-    canvS->Print( "Corr_LENGTHvsSTART.png" );
-    canvS->Close();
-
-
-    TH1F* hA = new TH1F("hA",";angle, deg.; Events", 200,-10,10);
-    TH1F* hB = new TH1F("hB",";angle, deg.; Events", 200,-10,10);
-    for(int e=0;e<Evts;e++){
-        hA->Fill( atan( (fp[e]-cp[e])*W1/25. )*180./3.14159265);
-        hB->Fill( atan( (sp[e]-fp[e])*W1/40. )*180./3.14159265);
-    }
-    TCanvas* canvA = new TCanvas("canvA","canvA",800,800);
-    hA->SetLineWidth(2);
-    hA->SetLineColor(1);
-    hA->SetFillColor(1);
-    hA->SetFillStyle(3005);
-    hA->Draw();
-    std::cout << "mean : " << hA->GetMean() << "\t rms : " << hA->GetRMS() << "\n";
-    canvA->Print( "Angle_0vs1.png" );
-    hB->SetLineWidth(2);
-    hB->SetLineColor(2);
-    hB->SetFillColor(2);
-    hB->SetFillStyle(3004);
-    hB->Draw();
-    std::cout << "mean : " << hB->GetMean() << "\t rms : " << hB->GetRMS() << "\n";
-    canvA->Print( "Angle_1vs2.png" );
-    canvA->Close();
-
-
-    TCanvas* canvW = new TCanvas("canvW","canvW",800,800);
-    hd1->SetLineWidth(2);
-    hd1->SetLineColor(2);
-    hd1->SetFillColor(2);
-    hd1->SetFillStyle(3004);
-    hd1->Draw();
-    std::cout << "mean : " << hd1->GetMean() << "\t rms : " << hd1->GetRMS() << "\n";
-    canvW->Print( "Length_01.png" );
-    canvW->Close();
-    std::cout << "Energy: " << tTotal->GetMean() << " +- " << tTotal->GetRMS() << "\n";
-*/
 
     std::cout << "EvtCntr = " << EvtCntr << "\n";
     gSystem->Exit(0);
