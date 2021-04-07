@@ -36,7 +36,7 @@ class PrimaryGenerator : public G4VPrimaryGenerator
     G4double fXpos, fYpos, fZpos;      // position
     G4double fXmom, fYmom, fZmom;      // momentum projections
     double fX, fY, fZ, fXp, fYp, fZp;
-    int pcode;
+    int pcode, ev_num;
 
     std::ifstream in_file ;
 //    std::ofstream ge_file ;
@@ -59,7 +59,7 @@ PrimaryGenerator::~PrimaryGenerator()
 
 void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
 {
-  in_file  >> pcode >> fX >> fY >> fZ >> fXp >> fYp >> fZp;
+  in_file  >> ev_num >> pcode >> fX >> fY >> fZ >> fXp >> fYp >> fZp;
 
   G4ParticleDefinition* particleDefGamma    = G4ParticleTable::GetParticleTable()->FindParticle("gamma");
   G4ParticleDefinition* particleDefMup      = G4ParticleTable::GetParticleTable()->FindParticle("mu+");

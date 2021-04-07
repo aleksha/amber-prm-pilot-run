@@ -54,7 +54,9 @@ for e in in_list:
 def list2file( lst, fname ):
     out_file = open( fname ,"w" )
     for ev in lst:
-        ss  = str( ev[0] ) + " "
+        idx = lst.index( ev )
+        ss  = str( idx   ) + " "
+        ss += str( ev[0] ) + " "
         ss += str( ev[1] ) + " "
         ss += str( ev[2] ) + " "
         ss += str( ev[3] ) + " "
