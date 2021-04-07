@@ -39,8 +39,6 @@ class PrimaryGenerator : public G4VPrimaryGenerator
     int pcode, ev_num;
 
     std::ifstream in_file ;
-//    std::ofstream ge_file ;
-
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -48,13 +46,11 @@ PrimaryGenerator::PrimaryGenerator()
 : G4VPrimaryGenerator()
 { 
   in_file.open("input_g4.txt", std::ios::in   );
-//  ge_file.open("gen.data"    , std::ios::trunc);
 }
 
 PrimaryGenerator::~PrimaryGenerator()
 { 
   in_file.close();
-//  ge_file.close();
 }
 
 void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
@@ -123,10 +119,6 @@ void PrimaryGenerator::GeneratePrimaryVertex(G4Event* event)
   vertexB->SetPrimary(particle1);
 
   event->AddPrimaryVertex(vertexB);
-//  int   ev_id = G4EventManager::GetEventManager()->GetConstCurrentEvent()->GetEventID() ;
-//  int ev_id=0;
-//  ge_file << ev_id << " " << fX  << " " << fY  << " " << fZ << " " ;
-//  ge_file << fXp   << " " << fYp << " " << fZp << " " << particle1->GetMass() << "\n";
 }
 
 //------------------------------------------------------------------------------

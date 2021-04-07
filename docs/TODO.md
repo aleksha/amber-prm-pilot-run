@@ -19,13 +19,12 @@
   * noise commands to `./prm`
   * Add frozen version of ESEPP
   * TPC geometry check
-
+  * Numbering to input files
 
 ## Updating in progress
   * Setup notes
 
 ## To be done
-
   * TPC signal builder
   * Hits accounting
   * Create beam noise event
