@@ -48,6 +48,14 @@ cp ../configs/cinfig.esepp config.ini
 python start.py config.ini
 ```
 
+Instead of cloning from github one can download a frozen version:
+```bash
+wget http://adzyuba.web.cern.ch/adzyuba/d/esepp.tar.gz
+tar zxvf esepp.tar.gz
+cd esepp/
+make
+```
+
 ## Full event
 
 The idea is to create events, which contains:

@@ -17,12 +17,13 @@
   * `docs/` dir
   * `./prm` bash application
   * noise commands to `./prm`
-
+  * Add frozen version of ESEPP
+  
 ## Updating in progress
   * Setup notes
 
 ## To be done
-  * Add frozen version of ESEPP
+
   * TPC signal builder
   * Hits accounting
   * Create beam noise event
