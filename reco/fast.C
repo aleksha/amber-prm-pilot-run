@@ -61,15 +61,15 @@ int get_pad2(double x, double y){
     double l;
     l = sqrt(x*x+y*y);
 
-    if( l>290 && l<=330) return  8;
-    if( l>250 && l<=290) return  7;
-    if( l>210 && l<=250) return  6;
-    if( l>170 && l<=210) return  5;
-    if( l>130 && l<=170) return  4;
-    if( l> 90 && l<=130) return  3;
-    if( l> 50 && l<= 90) return  2;
-    if( l> 10 && l<= 50) return  1;
-    if( l<= 10)          return  0;
+    //if( l>290 && l<=330) return  8;
+    //if( l>250 && l<=290) return  7;
+    //if( l>210 && l<=250) return  6;
+    if( l>161.5 && l<=200.5) return  5;
+    if( l>125.5 && l<=161.5) return  4;
+    if( l> 83.5 && l<=125.5) return  3;
+    if( l> 44.5 && l<= 83.5) return  2;
+    if( l>  5.5 && l<= 44.5) return  1;
+    if( l<= 5.5)             return  0;
 
     return -1;
 }
