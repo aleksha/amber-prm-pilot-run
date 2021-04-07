@@ -238,13 +238,13 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   //G4Box* solidLV61 = new G4Box("LV61", 0.5*ll_xy, 0.5*ll_xy, 0.5*lW_z );
   //G4Box* solidLV70 = new G4Box("LV70", 0.5*ll_xy, 0.5*ll_xy, 0.5*lAl_z);
 
-  G4Tubs* solidLV40  = new G4Tubs( "LV40" , 0.*mm, 0.5*ll_xy, 0.5*l_z, 0.*deg, 360.*deg );
-  G4Tubs* solidLV41  = new G4Tubs( "LV41" , 0.*mm, 0.5*ll_xy, 0.5*l_z, 0.*deg, 360.*deg );
-  G4Tubs* solidLV50  = new G4Tubs( "LV50" , 0.*mm, 0.5*ll_xy, 0.5*l_z, 0.*deg, 360.*deg );
-  G4Tubs* solidLV51  = new G4Tubs( "LV51" , 0.*mm, 0.5*ll_xy, 0.5*l_z, 0.*deg, 360.*deg );
-  G4Tubs* solidLV60  = new G4Tubs( "LV60" , 0.*mm, 0.5*ll_xy, 0.5*l_z, 0.*deg, 360.*deg );
-  G4Tubs* solidLV61  = new G4Tubs( "LV61" , 0.*mm, 0.5*ll_xy, 0.5*l_z, 0.*deg, 360.*deg );
-  G4Tubs* solidLV70  = new G4Tubs( "LV70" , 0.*mm, 0.5*ll_xy, 0.5*l_z, 0.*deg, 360.*deg );
+  G4Tubs* solidLV40  = new G4Tubs( "LV40" , 0.*mm, 0.5*ll_xy, 0.5*lKa_z, 0.*deg, 360.*deg );
+  G4Tubs* solidLV41  = new G4Tubs( "LV41" , 0.*mm, 0.5*ll_xy, 0.5*lKa_z, 0.*deg, 360.*deg );
+  G4Tubs* solidLV50  = new G4Tubs( "LV50" , 0.*mm, 0.5*ll_xy, 0.5*lCu_z, 0.*deg, 360.*deg );
+  G4Tubs* solidLV51  = new G4Tubs( "LV51" , 0.*mm, 0.5*ll_xy, 0.5*lCu_z, 0.*deg, 360.*deg );
+  G4Tubs* solidLV60  = new G4Tubs( "LV60" , 0.*mm, 0.5*ll_xy, 0.5*lW_z , 0.*deg, 360.*deg );
+  G4Tubs* solidLV61  = new G4Tubs( "LV61" , 0.*mm, 0.5*ll_xy, 0.5*lW_z , 0.*deg, 360.*deg );
+  G4Tubs* solidLV70  = new G4Tubs( "LV70" , 0.*mm, 0.5*ll_xy, 0.5*lAl_z, 0.*deg, 360.*deg );
 
   G4LogicalVolume* logicLV00 = new G4LogicalVolume(solidLV00 , SiSolid, "LV00");
   G4LogicalVolume* logicLV01 = new G4LogicalVolume(solidLV01 , SiSolid, "LV01");
