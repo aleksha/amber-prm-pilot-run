@@ -34,4 +34,10 @@
   * ESEPP give a single energy!
 
 ## Not possible 
-  * activate conda env from script
+  * activate conda env from script 
+
+This is because environmental variables are only passed to child 
+processes. There isn't a built-in way of setting environmental variables 
+of the parent shell. This is good in most cases and prevents programs from 
+affecting the operating environment from which they were called
+
