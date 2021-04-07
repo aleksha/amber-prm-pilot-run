@@ -2,12 +2,6 @@
 echo "Command: $1";
 
 # ----- build cmd ----
-if [ $1 = pres-mc ]
-then
-    conda activate pres-mc;
-fi
-
-# ----- build cmd ----
 if [ $1 = build ]
 then
     source scripts/build_g4.sh;
