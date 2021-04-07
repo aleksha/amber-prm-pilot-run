@@ -22,8 +22,8 @@
 #include "TLatex.h"
 
 //bool ADD_NOISE = false;
-bool ADD_NOISE = true;
-int MY_EVTS    = 7000;
+bool ADD_NOISE = false;
+int MY_EVTS    = 1;
 double Calib   = 200./151.;
 
 int Ne_MAX = 100; // max nubmer of e- per substep
@@ -75,7 +75,7 @@ int get_pad2(double x, double y){
 }
 
 
-void fast( float z_anod  = -390., bool backwd = True, int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
+void fast( float z_anod  = -400., bool backwd = true, int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
 
   double I_av = 36.5*0.001*0.001; // MeV --> 36.5 eV to create e-ion pair
   int N_e;
@@ -120,12 +120,13 @@ void fast( float z_anod  = -390., bool backwd = True, int Evts=MY_EVTS, bool Add
 
     int EvtCntr=0;
 
-    std::ifstream fOUT("../run_prot/out.data" , std::ios::in);
+    std::ifstream fOUT("../run_prot/tpc.data" , std::ios::in);
     std::ifstream fNOI("../noise/noise.data"  , std::ios::in);
 
     TString pFADC,pDIFF,pTEMP,pDEMP;
     TString pdDIFF, psDIFF;
     TString pMax, pStart, pEnergy;
+
 
     out = new TTree("out","out");
 
@@ -242,6 +243,15 @@ void fast( float z_anod  = -390., bool backwd = True, int Evts=MY_EVTS, bool Add
 
 
             for(int p=0;p<9;p++){
+
+    TCanvas* canv = new TCanvas("canv","canv",1200,300);
+    gStyle->SetOptStat(0);
+    hFADC[p]->Draw("hist");
+    if(p<10){pFADC.Form("aFADS_0%d.png",p);}
+    else{ pFADC.Form("aFADS_%d.png",p);}
+    canv->Print( pFADC );
+    canv->Close();
+
                 for(int nbin=1;nbin<2694;nbin++){
                     fNOI >> Val;
                     if(nbin<2551 && AddNoise){
@@ -268,9 +278,10 @@ void fast( float z_anod  = -390., bool backwd = True, int Evts=MY_EVTS, bool Add
 //                if(p==0) print_info(info[p]) ;
 //                std::cout << "pad:" << p << "  "; print_info(info[p]) ;
             }
-//            std::cout << "pad: 1\t" << info[1].start << "\t" << info[1].end << "\t\t" << info[1].end-info[1].start << "\n";
             tTotal->Fill(TotalE);
             tMeV->Fill(TotalE/35710.);
+//            if(info[1].is_fired)
+            std::cout << "ev " << EVENT << "\t\t" << TotalE << "\n";
 
             if(info[2].is_fired && !(info[3].is_fired)) { tA2->Fill(TotalE/35710.); EvtCntr++;}
             if(info[3].is_fired && !(info[4].is_fired)) { tA3->Fill(TotalE/35710.); EvtCntr++;}
@@ -351,7 +362,7 @@ void fast( float z_anod  = -390., bool backwd = True, int Evts=MY_EVTS, bool Add
         }
 
 
-        if(vol==0){
+        if(vol==10 && zi<0){
             N_e = int( dE/ I_av );
             double ll = 1000.*sqrt(pow(xf-xi,2)+pow(yf-yi,2)+pow(zf-zi,2));
             Nsub = int(N_e/Ne_MAX);  if(Nsub < int(ll/Ll_MAX)) Nsub = int(ll/Ll_MAX);
@@ -369,13 +380,16 @@ void fast( float z_anod  = -390., bool backwd = True, int Evts=MY_EVTS, bool Add
                     z = zi + 0.5*dz + dz*ee;
                     t = ti + 0.5*dt + dt*ee;
                     fpad = get_pad2(x,y);
-                    xd = x + gRandom->Gaus(0,0.06*sqrt(z/10.));
-                    yd = y + gRandom->Gaus(0,0.06*sqrt(z/10.));
-                    dpad = get_pad2(xd,yd);
-                    if(fpad>-1 && dpad>-1){
+                    dpad = fpad;
+//                    xd = x + gRandom->Gaus(0,0.06*sqrt(z/10.));
+//                    yd = y + gRandom->Gaus(0,0.06*sqrt(z/10.));
+//                    dpad = get_pad2(xd,yd);
+                    if(fpad>-1){
                       t_anod = (t + (z-z_anod-10.) / W1 ) ;
-                      d_anod = (t + (z+gRandom->Gaus(0,0.08*sqrt(z/10.))-z_anod-10.) / W1 ) ;
+//                      d_anod = (t + (z+gRandom->Gaus(0,0.08*sqrt( (z /10.))-z_anod-10.) / W1 ) ;
+                      d_anod = t_anod;
                       tt = 20;
+//         std::cout << "ev: " << ev << "\t" << x << "\t" << y << "\t" << z << "\t" << t << "\t\t" << dE << "\t" << fpad  << "\t" << t_anod << "\n";
 
                       for(int iii = 0 ; iii<125; iii++  ){
                           hFADC[fpad]->Fill(t_anod + tt, Calib*Digi[iii]*N_e/Nsub);
