@@ -33,3 +33,5 @@
 ## Don't forget
   * ESEPP give a single energy!
 
+## Not possible 
+  * activate conda env from script
