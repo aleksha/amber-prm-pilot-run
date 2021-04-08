@@ -21,13 +21,7 @@
 #include "TStyle.h"
 #include "TLatex.h"
 
-//bool ADD_NOISE = false;
-bool ADD_NOISE = false;
-int MY_EVTS    = 1;
-double Calib   = 200./151.;
 
-int Ne_MAX = 100; // max nubmer of e- per substep
-int Ll_MAX = 40 ; // um, length of substep
 
 TH1F* hFADC[9];
 TH1F* hDIFF[9];
@@ -48,57 +42,15 @@ TH1F* tA5;
 
 TH1F* hd1;
 TTree* out;
+
 TFile *tfile;
 
-fadc_info info[9];
 
 
-int get_pad2(double x, double y){
-    // central pad R = 10 mm
-    // other rinrs with width = 40 mm
-    // numberinf inner-to-outer
-
-    double l;
-    l = sqrt(x*x+y*y);
-
-    //if( l>290 && l<=330) return  8;
-    //if( l>250 && l<=290) return  7;
-    //if( l>210 && l<=250) return  6;
-    if( l>161.5 && l<=200.5) return  5;
-    if( l>125.5 && l<=161.5) return  4;
-    if( l> 83.5 && l<=125.5) return  3;
-    if( l> 44.5 && l<= 83.5) return  2;
-    if( l>  5.5 && l<= 44.5) return  1;
-    if( l<= 5.5)             return  0;
-
-    return -1;
-}
 
 
 void fast( float z_anod  = -400., bool backwd = true, int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
 
-  double I_av = 36.5*0.001*0.001; // MeV --> 36.5 eV to create e-ion pair
-  int N_e;
-  int N_s=0;
-
-  int Nsub;
-
-  double l, X, Y, Z, t_anod, d_anod;
-
-  double W1 = 4.0*0.001; // mm/ns
-  
-
-//==============================================================================
-// read digitization
-//==============================================================================
-
-  double Digi[175];
-  int channel ;
-  double digi,tt;
-
-  std::ifstream fDIGI("./DigiC.txt" , std::ios::in);
-  while( fDIGI >> channel >> digi ) Digi[channel]=digi;
-  fDIGI.close();
 
 //==============================================================================
 // read digitization
@@ -238,171 +190,7 @@ void fast( float z_anod  = -400., bool backwd = true, int Evts=MY_EVTS, bool Add
     double cp[1000],fp[1000],mp[1000],ep[1000], sp[1000];
     double TotalE=0;
 
-    while( fOUT >> ev >> vol >> dE >> xi >> yi >> zi >> ti >> xf >> yf >> zf >> tf ){
-        if(ev>EVENT){
 
-
-            for(int p=0;p<9;p++){
-
-    TCanvas* canv = new TCanvas("canv","canv",1200,300);
-    gStyle->SetOptStat(0);
-    hFADC[p]->Draw("hist");
-    if(p<10){pFADC.Form("aFADS_0%d.png",p);}
-    else{ pFADC.Form("aFADS_%d.png",p);}
-    canv->Print( pFADC );
-    canv->Close();
-
-                for(int nbin=1;nbin<2694;nbin++){
-                    fNOI >> Val;
-                    if(nbin<2551 && AddNoise){
-                        hFADC[p]->SetBinContent( nbin, hFADC[p]->GetBinContent(nbin) + Val );
-                        hDIFF[p]->SetBinContent( nbin, hDIFF[p]->GetBinContent(nbin) + Val );
-                    }
-                }
-
-                info[p] = eval_info( hDIFF[p] );
-                smearTH1(hDIFF[p],sDIFF[p]);
-                derivTH1(sDIFF[p],dDIFF[p]);
-                MaxDervBin = dDIFF[p]->GetMaximumBin();
-                Slope = dDIFF[p]->GetBinContent( MaxDervBin );
-                if(info[p].is_fired){
-//                    info[p].start = eval_start2( hDIFF[p], info[p] );
-//                    info[p].end   = eval_end2  ( hDIFF[p], info[p] );
-                    tMax[p]->Fill(info[p].peak);
-                    tStart[p]->Fill(info[p].start);
-                    tEnergy[p]->Fill(info[p].energy);
-                    TotalE += info[p].energy;
-//                    std::cout << "----> " << p << "\t" << info[p].energy << "\n";
-                }
-
-//                if(p==0) print_info(info[p]) ;
-//                std::cout << "pad:" << p << "  "; print_info(info[p]) ;
-            }
-            tTotal->Fill(TotalE);
-            tMeV->Fill(TotalE/35710.);
-//            if(info[1].is_fired)
-            std::cout << "ev " << EVENT << "\t\t" << TotalE << "\n";
-
-            if(info[2].is_fired && !(info[3].is_fired)) { tA2->Fill(TotalE/35710.); EvtCntr++;}
-            if(info[3].is_fired && !(info[4].is_fired)) { tA3->Fill(TotalE/35710.); EvtCntr++;}
-            if(info[4].is_fired && !(info[5].is_fired)) tA4->Fill(TotalE/35710.);
-            if(info[5].is_fired && !(info[6].is_fired)) tA5->Fill(TotalE/35710.);
-
-            hd1->Fill(info[1].end-info[1].start);
-            cp[EVENT] = info[0].start;
-            fp[EVENT] = info[1].start;
-            sp[EVENT] = info[2].start;
-            mp[EVENT] = info[1].peak ;
-            ep[EVENT] = info[1].end - info[1].start ;
-
-            fired0 = info[0].is_fired;
-            fired1 = info[1].is_fired;
-            fired2 = info[2].is_fired;
-            fired3 = info[3].is_fired;
-            fired4 = info[4].is_fired;
-            fired5 = info[5].is_fired;
-            fired6 = info[6].is_fired;
-            fired7 = info[7].is_fired;
-            fired8 = info[8].is_fired;
-
-            energy0 = info[0].energy;
-            energy1 = info[1].energy;
-            energy2 = info[2].energy;
-            energy3 = info[3].energy;
-            energy4 = info[4].energy;
-            energy5 = info[5].energy;
-            energy6 = info[6].energy;
-            energy7 = info[7].energy;
-            energy8 = info[8].energy;
-            energy  = TotalE;
-
-            start0 = info[0].start;
-            start1 = info[1].start;
-            start2 = info[2].start;
-            start3 = info[3].start;
-            start4 = info[4].start;
-            start5 = info[5].start;
-            start6 = info[6].start;
-            start7 = info[7].start;
-            start8 = info[8].start;
-
-            peak0 = info[0].peak;
-            peak1 = info[1].peak;
-            peak2 = info[2].peak;
-            peak3 = info[3].peak;
-            peak4 = info[4].peak;
-            peak5 = info[5].peak;
-            peak6 = info[6].peak;
-            peak7 = info[7].peak;
-            peak8 = info[8].peak;
-
-            end0 = info[0].end;
-            end1 = info[1].end;
-            end2 = info[2].end;
-            end3 = info[3].end;
-            end4 = info[4].end;
-            end5 = info[5].end;
-            end6 = info[6].end;
-            end7 = info[7].end;
-            end8 = info[8].end;
-
-            out->Fill();
-            if( !(ev%200) ) std::cout << "PROCESSED: "<< ev << " events\n";
-
-            if(ev==Evts) break;
-
-            for(int p=0;p<9;p++){
-                hFADC[p]->Reset();
-                hDIFF[p]->Reset();
-                dDIFF[p]->Reset();
-                sDIFF[p]->Reset();
-            }
-            TotalE=0;
-            EVENT=ev;
-        }
-
-
-        if(vol==10 && zi<0){
-            N_e = int( dE/ I_av );
-            double ll = 1000.*sqrt(pow(xf-xi,2)+pow(yf-yi,2)+pow(zf-zi,2));
-            Nsub = int(N_e/Ne_MAX);  if(Nsub < int(ll/Ll_MAX)) Nsub = int(ll/Ll_MAX);
-            if(Nsub<1) Nsub=1;
-
-            if(N_e>0){
-                dx = (xf-xi)/Nsub;
-                dy = (yf-yi)/Nsub;
-                dz = (zf-zi)/Nsub;
-                dt = (tf-ti)/Nsub;
-                N_s = 0;
-                for(int ee=0;ee<Nsub;ee++){
-                    x = xi + 0.5*dx + dx*ee;
-                    y = yi + 0.5*dy + dy*ee;
-                    z = zi + 0.5*dz + dz*ee;
-                    t = ti + 0.5*dt + dt*ee;
-                    fpad = get_pad2(x,y);
-                    dpad = fpad;
-//                    xd = x + gRandom->Gaus(0,0.06*sqrt(z/10.));
-//                    yd = y + gRandom->Gaus(0,0.06*sqrt(z/10.));
-//                    dpad = get_pad2(xd,yd);
-                    if(fpad>-1){
-                      t_anod = (t + (z-z_anod-10.) / W1 ) ;
-//                      d_anod = (t + (z+gRandom->Gaus(0,0.08*sqrt( (z /10.))-z_anod-10.) / W1 ) ;
-                      d_anod = t_anod;
-                      tt = 20;
-//         std::cout << "ev: " << ev << "\t" << x << "\t" << y << "\t" << z << "\t" << t << "\t\t" << dE << "\t" << fpad  << "\t" << t_anod << "\n";
-
-                      for(int iii = 0 ; iii<125; iii++  ){
-                          hFADC[fpad]->Fill(t_anod + tt, Calib*Digi[iii]*N_e/Nsub);
-                          hDIFF[dpad]->Fill(d_anod + tt, Calib*Digi[iii]*N_e/Nsub);
-                          tt = tt + 40 ;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    fOUT.close();
-    fNOI.close();
 
 
     tfile = new TFile("out.root","RECREATE");
@@ -425,7 +213,6 @@ void fast( float z_anod  = -400., bool backwd = true, int Evts=MY_EVTS, bool Add
     canv->Close();
 
 
-    std::cout << "EvtCntr = " << EvtCntr << "\n";
-    gSystem->Exit(0);
+
 
 }

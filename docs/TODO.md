@@ -23,9 +23,9 @@
 
 ## Updating in progress
   * Setup notes
+  * TPC signal builder
 
 ## To be done
-  * TPC signal builder
   * Hits accounting
   * Create beam noise event
   * Merge event
