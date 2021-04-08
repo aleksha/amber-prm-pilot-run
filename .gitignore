@@ -6,10 +6,13 @@
 # Prerequisites
 *.d
 
-### ESEPP ###
-# Prerequisites
+### PRM ###
 *.root
 *.info
+*.txt
+*.png
+*.data
+*history
 
 # Compiled Object files
 *.slo
