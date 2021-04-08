@@ -44,7 +44,7 @@ make
 ```
 Edit `config.ini` and run it:
 ```bash
-cp ../configs/cinfig.esepp config.ini
+cp ../configs/esepp/config.ini ./
 python start.py config.ini
 ```
 
