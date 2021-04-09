@@ -1,8 +1,8 @@
 
-int MY_EVTS = 5;
+int MY_EVTS = 500;
 
 //--- Beam events
-bool ADD_BEAM = true;
+bool ADD_BEAM = false;
 double BeamFrequency = 2.0; // MHz
 
 //--- Anodes positions
@@ -19,12 +19,12 @@ double I_av = 36.5*0.001*0.001; // MeV --> 36.5 eV to create e-ion pair
 double W1 = 4.0*0.001; // mm/ns
 
 //--- Shapung
-bool ADD_SHAPING = true;
+bool ADD_SHAPING = false;
 
 //--- Diffusion
-bool  ADD_DIFFUSION = true;
+bool  ADD_DIFFUSION = false;
 double DIFF_P =0.06; // parameter is obtained from German Korolev (PNPI)
 double DIFF_L =0.08; // parameter is obtained from German Korolev (PNPI)
 
 //-- Noise
-bool ADD_NOISE = true;
+bool ADD_NOISE = false;

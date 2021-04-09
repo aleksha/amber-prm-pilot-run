@@ -129,7 +129,10 @@ void reco_tpc( int Evts=MY_EVTS){
             pFADC.Form ("hFADS_%d", pad);
         }
         hFADC[pad] = new TH1F( pFADC," ;time, ns; voltage, a.u.", 2550, 0., 40.*2550. );
-        hFADC[pad]->GetYaxis()->SetRangeUser(8000,16000);
+        hFADC[pad]->GetXaxis()->SetRangeUser(0,20000);
+//        hFADC[pad]->GetXaxis()->SetRangeUser(90000,100000);
+//        hFADC[pad]->GetYaxis()->SetRangeUser(8000,16000);
+        hFADC[pad]->SetMinimum(0);
     }
         
 
@@ -164,7 +167,7 @@ void reco_tpc( int Evts=MY_EVTS){
                 info[p] = eval_info( hFADC[p] );
             }
 
-            //if( !(ev%200) ) std::cout << "PROCESSED: "<< ev << " events\n";
+            if( !(ev%50) ) std::cout << "PROCESSED: "<< ev << " events\n";
 
             if(ev==Evts) break;
 
