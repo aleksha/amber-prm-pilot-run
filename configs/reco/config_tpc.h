@@ -17,7 +17,7 @@ double Z_anode_1 = -400.;
 double Z_anode_2 =  400.;
 
 // diffusion parameters are obtained from German Korolev (PNPI)
-bool  ADD_DIFFUSION = false;
+bool  ADD_DIFFUSION = true;
 double DIFF_P =0.06;
 double DIFF_L =0.08;
 

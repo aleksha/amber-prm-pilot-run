@@ -73,6 +73,7 @@ void load_Digi(){
   }
 }
 
+
 void reco_tpc( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
 
   int N_e, Nsub;
@@ -159,14 +160,20 @@ void reco_tpc( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
                     z = zi + 0.5*dz + dz*ee;
                     t = ti + 0.5*dt + dt*ee;
                     fpad = get_pad2(x,y,z);
+
                     if( z<0){
                         path_length = z-Z_anode_1+10.;
                     } else{
                         path_length = Z_anode_2-10.- z;
                     }
-//                    xd = x + gRandom->Gaus(0,DIFF_P*sqrt(path_length/10.));
-//                    yd = y + gRandom->Gaus(0,DIFF_P*sqrt(path_length/10.));
-//                    zd = z + gRandom->Gaus(0,DIFF_L*sqrt(path_length/10.));
+
+                    if(ADD_DIFFUSION){
+                        x = x + gRandom->Gaus(0,DIFF_P*sqrt(path_length/10.));
+                        y = y + gRandom->Gaus(0,DIFF_P*sqrt(path_length/10.));
+                        z = z + gRandom->Gaus(0,DIFF_L*sqrt(path_length/10.));
+                    }
+
+
                     if(fpad>-1){
                       t_anod = t + ( path_length / W1)  ;
                       tt = 20;
