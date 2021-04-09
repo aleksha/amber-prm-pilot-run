@@ -74,7 +74,7 @@ void load_Digi(){
 }
 
 
-void reco_tpc( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
+void reco_tpc( int Evts=MY_EVTS){
 
   int N_e, Nsub;
   int N_s=0;
@@ -110,29 +110,34 @@ void reco_tpc( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
     }
         
 
-    std::ifstream fOUT("../run_prot/tpc.data" , std::ios::in);
-    std::ifstream fNOI("../noise/noise.data"  , std::ios::in);
+    std::ifstream fPROT("../run_prot/tpc.data" , std::ios::in);
+    std::ifstream fBEAM("../run_beam/tpc.data" , std::ios::in);
+    std::ifstream fNOIS("../noise/noise.data"  , std::ios::in);
 
 
-    while( fOUT >> ev >> vol >> dE >> xi >> yi >> zi >> ti >> xf >> yf >> zf >> tf ){
+    while( fPROT >> ev >> vol >> dE >> xi >> yi >> zi >> ti >> xf >> yf >> zf >> tf ){
 
         if(ev>EVENT){
-            for(int p=0;p<12;p++){
-                for(int nbin=1;nbin<2694;nbin++){
-                    fNOI >> Val;
-                    if(nbin<2551 && AddNoise){
-                        hFADC[p]->SetBinContent( nbin, hFADC[p]->GetBinContent(nbin) + Val );
+            if( ADD_NOISE ){
+                for(int p=0;p<12;p++){
+                    for(int nbin=1;nbin<2694;nbin++){
+                        fNOIS >> Val;
+                        if( nbin<2551 ){
+                            hFADC[p]->SetBinContent( nbin, hFADC[p]->GetBinContent(nbin) + Val );
+                        }
                     }
                 }
-
+            }
+            
+            for(int p=0;p<12;p++){
                 info[p] = eval_info( hFADC[p] );
             }
 
-            if( !(ev%200) ) std::cout << "PROCESSED: "<< ev << " events\n";
+            //if( !(ev%200) ) std::cout << "PROCESSED: "<< ev << " events\n";
 
             if(ev==Evts) break;
 
-            for(int p=0;p<12;p++)  hFADC[p]->Reset();
+            for(int p=0;p<12;p++){ hFADC[p]->Reset(); }
 
             EVENT=ev;
         }
@@ -187,8 +192,9 @@ void reco_tpc( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
         }
     }
 
-    fOUT.close();
-    fNOI.close();
+    fPROT.close();
+    fBEAM.close();
+    fNOIS.close();
 
 //==============================================================================
 // finishing
