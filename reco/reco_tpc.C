@@ -24,6 +24,8 @@
 
 fadc_info info[12];
 TH1F* hFADC[12];
+double Digi[175];
+
 
 int get_pad2(double x, double y, double z){
     // central pad R = 10 mm
@@ -52,16 +54,7 @@ int get_pad2(double x, double y, double z){
     return -1;
 }
 
-void reco_tpc( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
-
-  int N_e, Nsub;
-  int N_s=0;
-  double l, X, Y, Z, t_anod, d_anod, tt;
-  
-//==============================================================================
-// read digitization
-//==============================================================================
-  double Digi[175];
+void load_Digi(){
   int channel ;
   double digi;
 
@@ -78,7 +71,16 @@ void reco_tpc( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
           }
       }
   }
+}
 
+void reco_tpc( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
+
+  int N_e, Nsub;
+  int N_s=0;
+  double l, X, Y, Z, t_anod, d_anod, tt;
+  
+
+  load_Digi();
 
 //==============================================================================
 // run it
@@ -94,8 +96,6 @@ void reco_tpc( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
     int tEv=0;
 
     int fpad;
-
-    int EvtCntr=0;
 
     TString pFADC;
 
@@ -197,7 +197,7 @@ void reco_tpc( int Evts=MY_EVTS, bool AddNoise=ADD_NOISE ){
     }
     canv->Close();
 
-    std::cout << "EvtCntr = " << EvtCntr << "\n";
+
     gSystem->Exit(0);
 
 }

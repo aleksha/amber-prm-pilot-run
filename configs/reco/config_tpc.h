@@ -22,5 +22,5 @@ double DIFF_P =0.06;
 double DIFF_L =0.08;
 
 // add noise
-//bool ADD_NOISE = true;
-bool ADD_NOISE = false;
+bool ADD_NOISE = true;
+//bool ADD_NOISE = false;
