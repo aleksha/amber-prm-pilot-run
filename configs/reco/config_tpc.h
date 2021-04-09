@@ -1,11 +1,17 @@
 
-int MY_EVTS    = 5;
-double Calib   = 200./151.;
+int MY_EVTS = 5;
+
+//--- Beam events
+bool ADD_BEAM = true;
+double BeamFrequency = 2.0; // MHz
 
 //--- Anodes positions
 double Z_anode_1 = -400.;
 double Z_anode_2 =  400.;
 
+
+//--- Calibration data
+double Calib   = 200./151.;
 int Ne_MAX = 100; // max nubmer of e- per substep
 int Ll_MAX = 40 ; // um, length of substep
 

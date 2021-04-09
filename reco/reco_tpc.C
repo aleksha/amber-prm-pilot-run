@@ -26,6 +26,8 @@ fadc_info info[12];
 TH1F* hFADC[12];
 double Digi[175];
 
+double time_shifts[1000];
+int ts;
 
 int get_pad2(double x, double y, double z){
     // central pad R = 10 mm
@@ -74,6 +76,26 @@ void load_Digi(){
 }
 
 
+void gen_time_shifts(){
+    double beam_noise_time = 0.;
+    ts=0;
+    // go fwd
+    while ( beam_noise_time < 2550.*40.){
+        beam_noise_time += gRandom->Exp( 1000./BeamFrequency );
+        time_shifts[ts] = beam_noise_time;
+        ts++;
+    }
+    // go bkwd
+    beam_noise_time = 0.;
+    while ( beam_noise_time > -2550.*40.){
+        beam_noise_time -= gRandom->Exp( 1000./BeamFrequency );
+        time_shifts[ts] = beam_noise_time;
+        ts++;
+    }
+}
+                
+
+
 void reco_tpc( int Evts=MY_EVTS){
 
   int N_e, Nsub;
@@ -107,6 +129,7 @@ void reco_tpc( int Evts=MY_EVTS){
             pFADC.Form ("hFADS_%d", pad);
         }
         hFADC[pad] = new TH1F( pFADC," ;time, ns; voltage, a.u.", 2550, 0., 40.*2550. );
+        hFADC[pad]->GetYaxis()->SetRangeUser(8000,16000);
     }
         
 
@@ -118,6 +141,8 @@ void reco_tpc( int Evts=MY_EVTS){
     while( fPROT >> ev >> vol >> dE >> xi >> yi >> zi >> ti >> xf >> yf >> zf >> tf ){
 
         if(ev>EVENT){
+
+            // Electronic Noise
             if( ADD_NOISE ){
                 for(int p=0;p<12;p++){
                     for(int nbin=1;nbin<2694;nbin++){
@@ -128,7 +153,13 @@ void reco_tpc( int Evts=MY_EVTS){
                     }
                 }
             }
-            
+
+            // Beam Noise
+            if( ADD_BEAM ){
+                gen_time_shifts();
+            }
+
+            // Eval signal info
             for(int p=0;p<12;p++){
                 info[p] = eval_info( hFADC[p] );
             }
