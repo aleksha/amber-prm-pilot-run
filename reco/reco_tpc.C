@@ -139,6 +139,7 @@ void reco_tpc( int Evts=MY_EVTS){
     std::ifstream fPROT("../run_prot/tpc.data" , std::ios::in);
     std::ifstream fBEAM("../run_beam/tpc.data" , std::ios::in);
     std::ifstream fNOIS("../noise/noise.data"  , std::ios::in);
+    std::ofstream fOUT("./signal.data"  , std::ios::trunc);
 
 
     while( fPROT >> ev >> vol >> dE >> xi >> yi >> zi >> ti >> xf >> yf >> zf >> tf ){
@@ -165,6 +166,12 @@ void reco_tpc( int Evts=MY_EVTS){
             // Eval signal info
             for(int p=0;p<12;p++){
                 info[p] = eval_info( hFADC[p] );
+            }
+
+            if( WRITE_ASCII ){
+                for(int ss=CH_START;ss<CH_STOP;ss++)
+                    fOUT << hFADC[ CH_WRITE ]->GetBinContent(ss) << " " ;
+                fOUT << "\n" ;
             }
 
             if( !(ev%50) ) std::cout << "PROCESSED: "<< ev << " events\n";
@@ -229,21 +236,22 @@ void reco_tpc( int Evts=MY_EVTS){
     fPROT.close();
     fBEAM.close();
     fNOIS.close();
+    fOUT.close();
 
 //==============================================================================
 // finishing
 //==============================================================================
-
-    TCanvas* canv = new TCanvas("canv","canv",1200,300);
-    gStyle->SetOptStat(0);
-    for(int p=0;p<12;p++){
-        hFADC[p]->Draw("hist");
-        if(p<10){pFADC.Form("FADS_0%d.png",p);}
-        else{ pFADC.Form("FADS_%d.png",p);}
-        canv->Print( pFADC );
+    if( DRAW_LAST ){
+        TCanvas* canv = new TCanvas("canv","canv",1200,300);
+        gStyle->SetOptStat(0);
+        for(int p=0;p<12;p++){
+            hFADC[p]->Draw("hist");
+            if(p<10){pFADC.Form("FADS_0%d.png",p);}
+            else{ pFADC.Form("FADS_%d.png",p);}
+            canv->Print( pFADC );
+        }
+        canv->Close();
     }
-    canv->Close();
-
 
     gSystem->Exit(0);
 

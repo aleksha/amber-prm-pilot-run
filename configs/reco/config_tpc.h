@@ -26,5 +26,14 @@ bool  ADD_DIFFUSION = false;
 double DIFF_P =0.06; // parameter is obtained from German Korolev (PNPI)
 double DIFF_L =0.08; // parameter is obtained from German Korolev (PNPI)
 
-//-- Noise
+//--- Noise
 bool ADD_NOISE = false;
+
+//--- Draw lact event 
+bool DRAW_LAST   = true;
+
+//--- Write ASCII
+bool WRITE_ASCII = true;
+int  CH_WRITE    = 1;
+int  CH_START    = 1;
+int  CH_STOP     = 501;
