@@ -19,15 +19,15 @@ double I_av = 36.5*0.001*0.001; // MeV --> 36.5 eV to create e-ion pair
 double W1 = 4.0*0.001; // mm/ns
 
 //--- Shapung
-bool ADD_SHAPING = false;
+bool ADD_SHAPING = true;
 
 //--- Diffusion
-bool  ADD_DIFFUSION = false;
+bool  ADD_DIFFUSION = true;
 double DIFF_P =0.06; // parameter is obtained from German Korolev (PNPI)
 double DIFF_L =0.08; // parameter is obtained from German Korolev (PNPI)
 
 //--- Noise
-bool ADD_NOISE = false;
+bool ADD_NOISE = true;
 
 //--- Draw lact event 
 bool DRAW_LAST   = true;

@@ -20,14 +20,15 @@
   * Add frozen version of ESEPP
   * TPC geometry check
   * Numbering to input files
+  * TPC signal builder
 
 ## Updating in progress
   * Setup notes
-  * TPC signal builder
+  * Hits accounting
 
 ## To be done
-  * Hits accounting
   * Create beam noise event
+  * Detector setup config
   * Merge event
 
 ## Don't forget

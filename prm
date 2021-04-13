@@ -16,6 +16,13 @@ then
     source scripts/run_prot.sh;
 fi
 
+# ----- clean run-all ----
+if [ $1 = run-muon ]
+then
+    source scripts/run_init.sh;
+    source scripts/run_scat.sh;
+fi
+
 # ----- download noise dump file cmd ----
 if [ $1 = get-noise-dump ]
 then
