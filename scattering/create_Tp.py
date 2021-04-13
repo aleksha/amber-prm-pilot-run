@@ -1,9 +1,10 @@
 #===============================================================================
-EVENTS   = 800
+EVENTS   = 5000
 Z_POS    = -380.
-T_P_LOW  = 0.95
-T_P_HIGH = 1.05
+T_P_LOW  = 3.4
+T_P_HIGH = 3.6
 USE_CORE = True
+reDirect = True
 #===============================================================================
 rfile = ROOT.TFile('../beamfile/beamfile_prm_mu100.root', "READ")
 rfile.ls()
@@ -46,20 +47,39 @@ for e in in_list:
             if ntp.E_p-m_p*1000.<T_P_HIGH:
                 accept = True
     esepp_init_list.append( (e[0] , X_scat, Y_scat, Z_scat, -100.*e[4], -100.*e[5], -100.) )
-    lepton = ROOT.TVector3()
-    proton = ROOT.TVector3()
-    l_p = sqrt( (0.001*ntp.E_l)**2 - m_l**2 )
-    p_p = sqrt( (0.001*ntp.E_p)**2 - m_p**2 )
-    lepton.SetMagThetaPhi( l_p, ntp.theta_l, ntp.phi_l )
-    proton.SetMagThetaPhi( p_p, ntp.theta_p, ntp.phi_p )
-    lpt = l_p*lepton.Unit()
-    prt = p_p*proton.Unit()
-    esepp_scat_list.append( ( e[0] , X_scat, Y_scat, Z_scat, lpt.X(), lpt.Y(), lpt.Z() ) )
-    esepp_prot_list.append( ( 2212 , X_scat, Y_scat, Z_scat, prt.X(), prt.Y(), prt.Z() ) )
+    direction = ROOT.TVector3(e[4],e[5], cos( asin( sqrt(e[4]**2+e[5]**2) ) ) ).Unit()
+    if reDirect:
+        lepton = ROOT.TVector3()
+        proton = ROOT.TVector3()
+        l_p = sqrt( (0.001*ntp.E_l)**2 - m_l**2 )
+        p_p = sqrt( (0.001*ntp.E_p)**2 - m_p**2 )
+        lepton.SetMagThetaPhi( l_p, ntp.theta_l, ntp.phi_l )
+        proton.SetMagThetaPhi( p_p, ntp.theta_p, ntp.phi_p )
+        # transforms v1 from the rotated frame (z' parallel to direction, x' in the theta plane 
+        #   and y' in the xy plane as well as perpendicular to the theta plane) to the (x,y,z) frame
+        lepton.RotateUz(direction)
+        proton.RotateUz(direction)
+        lpt = l_p*lepton.Unit()
+        prt = p_p*proton.Unit()
+        esepp_scat_list.append( ( e[0] , X_scat, Y_scat, Z_scat, lpt.X(), lpt.Y(), lpt.Z() ) )
+        esepp_prot_list.append( ( 2212 , X_scat, Y_scat, Z_scat, prt.X(), prt.Y(), prt.Z() ) )
+    else:
+        lepton = ROOT.TVector3()
+        proton = ROOT.TVector3()
+        l_p = sqrt( (0.001*ntp.E_l)**2 - m_l**2 )
+        p_p = sqrt( (0.001*ntp.E_p)**2 - m_p**2 )
+        lepton.SetMagThetaPhi( l_p, ntp.theta_l, ntp.phi_l )
+        proton.SetMagThetaPhi( p_p, ntp.theta_p, ntp.phi_p )
+        lpt = l_p*lepton.Unit()
+        prt = p_p*proton.Unit()
+        esepp_scat_list.append( ( e[0] , X_scat, Y_scat, Z_scat, lpt.X(), lpt.Y(), lpt.Z() ) )
+        esepp_prot_list.append( ( 2212 , X_scat, Y_scat, Z_scat, prt.X(), prt.Y(), prt.Z() ) )
     if len(esepp_prot_list)>EVENTS:
         break
     else:
         print(len(esepp_prot_list))
+#===============================================================================
+print( len(esepp_prot_list) )
 #===============================================================================
 def list2file( lst, fname ):
     out_file = open( fname ,"w" )

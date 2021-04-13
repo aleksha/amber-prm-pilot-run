@@ -34,6 +34,8 @@ for l_init in f_init:
         not_first = True
         while e_scat < e_init:
             l_scat = f_scat.readline()
+            if len(l_scat)<1:
+                break
             e_scat = int( l_scat[:-1].split(" ")[0] )
             f_merg.write( l_scat ) # write 
         EVENT += 1

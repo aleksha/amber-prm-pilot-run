@@ -4,5 +4,5 @@
 /run/verbose 0
 /random/resetEngineFrom seed
 /run/initialize
-/run/beamOn 100
+/run/beamOn 5000
 

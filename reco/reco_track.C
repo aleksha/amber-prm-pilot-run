@@ -74,6 +74,32 @@ bool good_event(){
    return true;
 }
 
+float calc_angle(){
+    TVector3 v1 = 0.5*(info[0].vect[0] + info[1].vect[0]);
+    TVector3 v2 = 0.5*(info[2].vect[0] + info[3].vect[0]);
+    TVector3 v3 = 0.5*(info[4].vect[0] + info[5].vect[0]);
+    TVector3 v4 = 0.5*(info[6].vect[0] + info[7].vect[0]);
+    return 1000.*1000.*(v4-v3).Angle(v2-v1);
+}
+
+
+float calc_angle1(){
+    TVector3 v1 = info[0].vect[0];
+    TVector3 v2 = info[2].vect[0];
+    TVector3 v3 = info[4].vect[0];
+    TVector3 v4 = info[6].vect[0];
+    return 1000.*1000.*(v4-v3).Angle(v2-v1);
+}
+
+
+float calc_angle2(){
+    TVector3 v1 = info[1].vect[0];
+    TVector3 v2 = info[3].vect[0];
+    TVector3 v3 = info[5].vect[0];
+    TVector3 v4 = info[7].vect[0];
+    return 1000.*1000.*(v4-v3).Angle(v2-v1);
+}
+
 void reco_track(){
 
     int ev, vol;
@@ -85,27 +111,42 @@ void reco_track(){
     int EVENT = 0;
     int nGood=0;
     int nBad =0;
+
+    float Ang;
+
+    TH1F* hAng = new TH1F("hAng",";angle,#mu rad;Evts", 150, 0, 1500);
     while( fMERGED >> ev >> vol >> dE >> x >> y >> z >> t ){
         if(ev>EVENT){
 
-
+/*
             std::cout << EVENT << "\t";
             for(int i=0;i<10;i++)
                 std::cout << "   " << info[i].n << "/" << required_hits[i] ;
             std::cout << "\n";
-
-            if( good_event() ) {nGood++;} else {nBad++;}
+*/
+            if( good_event() ){ 
+                nGood++;
+                //std::cout << EVENT << "\t" << calc_angle() << "\t" << calc_angle1() << "\t" << calc_angle2() << "\n";
+                //std::cout << EVENT << "\t" << calc_angle() << "\n";
+                Ang = calc_angle();
+                if( Ang>0 && Ang<1500) hAng->Fill( Ang );
+            } else {nBad++;}
 
             reset_info();
-
+//            if( (ev-EVENT)>1 ) std::cout << ev-1 << "\n";
             EVENT = ev;
         }
 
         fill_info(vol, x, y, z, t);
     }
 
+    TCanvas* canv = new TCanvas("canv","canv",800,600);
+    hAng->Draw();
+    canv->Print("ANG.png");
+
     std::cout << "Good / Bad : " << nGood << " / " << nBad << " \n";
-    std::cout << "Efficiency : " << 100.*float(nGood) / float( nGood + nBad) << " %\n";
+    std::cout << "Total      : " << EVENT << " \n";
+    std::cout << "Efficiency : " << 100.*float(nGood) / float( EVENT ) << " %\n";
 
     fMERGED.close();
     gSystem->Exit(0);

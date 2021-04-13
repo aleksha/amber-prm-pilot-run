@@ -38,6 +38,7 @@ for e in in_list:
     X_scat = e[1] + dZ*sin(e[4])
     Y_scat = e[2] + dZ*sin(e[5])
     esepp_init_list.append( (e[0] , X_scat, Y_scat, Z_scat, -100.*e[4], -100.*e[5], -100.) )
+    direction = ROOT.TVector3(e[4],e[5], cos( asin( sqrt(e[4]**2+e[5]**2) ) ) ).Unit()
     lepton = ROOT.TVector3()
     proton = ROOT.TVector3()
     E_l = 100000.
@@ -46,6 +47,8 @@ for e in in_list:
     p_p = sqrt( (0.001*E_p)**2 - m_p**2 )
     lepton.SetMagThetaPhi( l_p, 0, 0 )
     proton.SetMagThetaPhi( p_p, 0.5*pi, 0 )
+    lepton.RotateUz(direction)
+    proton.RotateUz(direction)
     lpt = l_p*lepton.Unit()
     prt = p_p*proton.Unit()
     esepp_scat_list.append( ( e[0] , X_scat, Y_scat, Z_scat, lpt.X(), lpt.Y(), lpt.Z() ) )
