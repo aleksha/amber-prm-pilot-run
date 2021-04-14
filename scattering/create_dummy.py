@@ -1,5 +1,7 @@
 #===============================================================================
 EVENTS   = 5000
+X_POS    =    0.
+Y_POS    =   18.
 Z_POS    = -380.
 T_P      = 2
 USE_CORE = True
@@ -17,7 +19,7 @@ ev     = 0
 length = len( tree )
 in_list = []
 while ev<EVENTS:
-    in_list.append( (13, 0., 0., -6299., 0., 0., 100. ) )
+    in_list.append( (13, X_POS, Y_POS, -6299., 0., 0., 100. ) )
     ev+=1
 #===============================================================================
 from math import sin, cos, asin, pi, sqrt
