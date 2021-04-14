@@ -13,6 +13,8 @@
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4SystemOfUnits.hh"
+
+#include "../../configs/geom/geom_config.h"
 //------------------------------------------------------------------------------
 MUPDetectorConstruction::MUPDetectorConstruction()
 : G4VUserDetectorConstruction(),
@@ -101,17 +103,41 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4double lSc_z  =  10.000*mm;
   G4double lG10_z =   1.500*mm;
 
-  // z-pozitiion of Si layers
-  G4double l00_z = -5900.000*mm + 0.5 * lSi_z;
-  G4double l01_z = -5825.000*mm + 0.5 * lSi_z;
-  G4double l02_z = - 900.000*mm + 0.5 * lSi_z;
-  G4double l03_z = - 825.000*mm + 0.5 * lSi_z;
-  G4double l04_z =   825.000*mm - 0.5 * lSi_z;
-  G4double l05_z =   900.000*mm - 0.5 * lSi_z;
-  G4double l06_z =  5825.000*mm - 0.5 * lSi_z;
-  G4double l07_z =  5900.000*mm - 0.5 * lSi_z;
+  // -pozitiion of Si layers
+  G4double l00_x = xPOS_Si0*mm ;
+  G4double l01_x = xPOS_Si1*mm ;
+  G4double l02_x = xPOS_Si2*mm ;
+  G4double l03_x = xPOS_Si3*mm ;
+  G4double l04_x = xPOS_Si4*mm ;
+  G4double l05_x = xPOS_Si5*mm ;
+  G4double l06_x = xPOS_Si6*mm ;
+  G4double l07_x = xPOS_Si7*mm ;
 
-  G4double lsc_z =   900.000*mm + lSi_z + 50.*mm + 0.5*lSc_z;
+  G4double lsc_x = xPOS_Sci*mm ;
+  
+  // y-pozitiion of Si layers
+  G4double l00_y = yPOS_Si0*mm ;
+  G4double l01_y = yPOS_Si1*mm ;
+  G4double l02_y = yPOS_Si2*mm ;
+  G4double l03_y = yPOS_Si3*mm ;
+  G4double l04_y = yPOS_Si4*mm ;
+  G4double l05_y = yPOS_Si5*mm ;
+  G4double l06_y = yPOS_Si6*mm ;
+  G4double l07_y = yPOS_Si7*mm ;
+
+  G4double lsc_y = yPOS_Sci*mm ;
+  
+  // z-pozitiion of Si layers
+  G4double l00_z = zPOS_Si0*mm + 0.5 * lSi_z;
+  G4double l01_z = zPOS_Si1*mm + 0.5 * lSi_z;
+  G4double l02_z = zPOS_Si2*mm + 0.5 * lSi_z;
+  G4double l03_z = zPOS_Si3*mm + 0.5 * lSi_z;
+  G4double l04_z = zPOS_Si4*mm - 0.5 * lSi_z;
+  G4double l05_z = zPOS_Si5*mm - 0.5 * lSi_z;
+  G4double l06_z = zPOS_Si6*mm - 0.5 * lSi_z;
+  G4double l07_z = zPOS_Si7*mm - 0.5 * lSi_z;
+
+  G4double lsc_z = zPOS_Sci*mm + lSi_z + 50.*mm + 0.5*lSc_z;
   
   // z-pozitiion of PCB for Si layers
   G4double lG0_z = l00_z - 0.5 * lSi_z - 0.5 * lG10_z;
@@ -307,25 +333,25 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   //G4LogicalVolume* logicLV70 = new G4LogicalVolume(solidLV70 , w_mat, "LV70");
 
 
-  G4ThreeVector l00_pos; l00_pos.set( 0, 0, l00_z ); // Si 1
-  G4ThreeVector l01_pos; l01_pos.set( 0, 0, l01_z ); // Si 2
-  G4ThreeVector l02_pos; l02_pos.set( 0, 0, l02_z ); // Si 3
-  G4ThreeVector l03_pos; l03_pos.set( 0, 0, l03_z ); // Si 4
-  G4ThreeVector l04_pos; l04_pos.set( 0, 0, l04_z ); // Si 5
-  G4ThreeVector l05_pos; l05_pos.set( 0, 0, l05_z ); // Si 6
-  G4ThreeVector l06_pos; l06_pos.set( 0, 0, l06_z ); // Si 7
-  G4ThreeVector l07_pos; l07_pos.set( 0, 0, l07_z ); // Si 8
+  G4ThreeVector l00_pos; l00_pos.set( l00_x, l00_y, l00_z ); // Si 1
+  G4ThreeVector l01_pos; l01_pos.set( l01_x, l01_y, l01_z ); // Si 2
+  G4ThreeVector l02_pos; l02_pos.set( l02_x, l02_y, l02_z ); // Si 3
+  G4ThreeVector l03_pos; l03_pos.set( l03_x, l03_y, l03_z ); // Si 4
+  G4ThreeVector l04_pos; l04_pos.set( l04_x, l04_y, l04_z ); // Si 5
+  G4ThreeVector l05_pos; l05_pos.set( l05_x, l05_y, l05_z ); // Si 6
+  G4ThreeVector l06_pos; l06_pos.set( l06_x, l06_y, l06_z ); // Si 7
+  G4ThreeVector l07_pos; l07_pos.set( l07_x, l07_y, l07_z ); // Si 8
 
-  G4ThreeVector l08_pos; l08_pos.set( 0, 0, lsc_z ); // Sci
+  G4ThreeVector l08_pos; l08_pos.set( lsc_x, lsc_y, lsc_z ); // Sci
 
-  G4ThreeVector lG0_pos; lG0_pos.set( 0, 0, lG0_z ); // PCB 1
-  G4ThreeVector lG1_pos; lG1_pos.set( 0, 0, lG1_z ); // PCB 2
-  G4ThreeVector lG2_pos; lG2_pos.set( 0, 0, lG2_z ); // PCB 3
-  G4ThreeVector lG3_pos; lG3_pos.set( 0, 0, lG3_z ); // PCB 4
-  G4ThreeVector lG4_pos; lG4_pos.set( 0, 0, lG4_z ); // PCB 5
-  G4ThreeVector lG5_pos; lG5_pos.set( 0, 0, lG5_z ); // PCB 6
-  G4ThreeVector lG6_pos; lG6_pos.set( 0, 0, lG6_z ); // PCB 7
-  G4ThreeVector lG7_pos; lG7_pos.set( 0, 0, lG7_z ); // PCB 8
+  G4ThreeVector lG0_pos; lG0_pos.set( l00_x, l00_y, lG0_z ); // PCB 1
+  G4ThreeVector lG1_pos; lG1_pos.set( l01_x, l01_y, lG1_z ); // PCB 2
+  G4ThreeVector lG2_pos; lG2_pos.set( l02_x, l02_y, lG2_z ); // PCB 3
+  G4ThreeVector lG3_pos; lG3_pos.set( l03_x, l03_y, lG3_z ); // PCB 4
+  G4ThreeVector lG4_pos; lG4_pos.set( l04_x, l04_y, lG4_z ); // PCB 5
+  G4ThreeVector lG5_pos; lG5_pos.set( l05_x, l05_y, lG5_z ); // PCB 6
+  G4ThreeVector lG6_pos; lG6_pos.set( l06_x, l06_y, lG6_z ); // PCB 7
+  G4ThreeVector lG7_pos; lG7_pos.set( l07_x, l07_y, lG7_z ); // PCB 8
 
   G4ThreeVector l10_pos; l10_pos.set( 0, 0, 0     ); // H2 gas   -- TPC volume
   G4ThreeVector l20_pos; l20_pos.set( 0, 0, l20_z ); // Be       -- entrance window
