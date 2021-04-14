@@ -74,6 +74,17 @@ bool good_event(){
    return true;
 }
 
+bool good_event2(){
+
+   if( info[0].n<1 && info[1].n<1 ) return false;
+   if( info[2].n<1 && info[3].n<1 ) return false;
+   if( info[4].n<1 && info[5].n<1 ) return false;
+   if( info[6].n<1 && info[7].n<1 ) return false;
+
+   return true;
+}
+
+
 float calc_angle(){
     TVector3 v1 = 0.5*(info[0].vect[0] + info[1].vect[0]);
     TVector3 v2 = 0.5*(info[2].vect[0] + info[3].vect[0]);
@@ -112,9 +123,13 @@ void reco_track(){
     int nGood=0;
     int nBad =0;
 
-    float Ang;
+    float Ang,Ang1,Ang2;
 
-    TH1F* hAng = new TH1F("hAng",";angle,#mu rad;Evts", 150, 0, 1500);
+    TH1F* hAng  = new TH1F("hAng" ,";angle,#mu rad;Evts", 150, 0, 1500);
+    TH1F* hAng1 = new TH1F("hAng1",";angle,#mu rad;Evts", 150, 0, 1500);
+    TH1F* hAng2 = new TH1F("hAng2",";angle,#mu rad;Evts", 150, 0, 1500);
+    hAng1->SetLineColor(1);
+    hAng2->SetLineColor(2);
     while( fMERGED >> ev >> vol >> dE >> x >> y >> z >> t ){
         if(ev>EVENT){
 
@@ -128,8 +143,12 @@ void reco_track(){
                 nGood++;
                 //std::cout << EVENT << "\t" << calc_angle() << "\t" << calc_angle1() << "\t" << calc_angle2() << "\n";
                 //std::cout << EVENT << "\t" << calc_angle() << "\n";
-                Ang = calc_angle();
-                if( Ang>0 && Ang<1500) hAng->Fill( Ang );
+                Ang  = calc_angle();
+                Ang1 = calc_angle1();
+                Ang2 = calc_angle2();
+                if( Ang>0 && Ang<1500)   hAng->Fill( Ang  );
+                if( Ang1>0 && Ang1<1500) hAng1->Fill( Ang1 );
+                if( Ang2>0 && Ang2<1500) hAng2->Fill( Ang2 );
             } else {nBad++;}
 
             reset_info();
@@ -141,7 +160,8 @@ void reco_track(){
     }
 
     TCanvas* canv = new TCanvas("canv","canv",800,600);
-    hAng->Draw();
+    hAng1->Draw();
+    hAng2->Draw("same");
     canv->Print("ANG.png");
 
     std::cout << "Good / Bad : " << nGood << " / " << nBad << " \n";
