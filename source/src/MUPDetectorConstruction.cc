@@ -103,7 +103,7 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4double lSc_z  =  10.000*mm;
   G4double lG10_z =   1.500*mm;
 
-  // -pozitiion of Si layers
+  // x-pozitiion of Si layers
   G4double l00_x = xPOS_Si0*mm ;
   G4double l01_x = xPOS_Si1*mm ;
   G4double l02_x = xPOS_Si2*mm ;
@@ -124,7 +124,6 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4double l05_y = yPOS_Si5*mm ;
   G4double l06_y = yPOS_Si6*mm ;
   G4double l07_y = yPOS_Si7*mm ;
-
   G4double lsc_y = yPOS_Sci*mm ;
   
   // z-pozitiion of Si layers
@@ -171,7 +170,6 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   //G4Material *BeSolid = new G4Material("BeSolid",  4,  9.01218  *g/mole,  1.848 * g/cm3 );
   G4Material* BeSolid = nist->FindOrBuildMaterial("G4_Be");
 
-
   G4double rBe_in  = 34.5*mm;
   G4double rBe_out = 35.5*mm;
   G4double dBeTPC  = 20.*mm;
@@ -188,7 +186,6 @@ G4VPhysicalVolume* MUPDetectorConstruction::Construct()
   G4double l_Sy  =   30.000*mm;
   G4double l_Gx  =  150.000*mm;
   G4double l_Gy  =  150.000*mm;
-
 
   //G4Material* AlSolid = nist->FindOrBuildMaterial("G4_Be");
   G4Material* CuSolid = nist->FindOrBuildMaterial("G4_Cu");

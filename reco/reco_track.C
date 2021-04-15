@@ -111,6 +111,25 @@ float calc_angle2(){
     return 1000.*1000.*(v4-v3).Angle(v2-v1);
 }
 
+float calc_angle3(){
+    TVector3 v1, v2, v3, v4;
+
+    if(info[0].n>0 ){ v1 = info[0].vect[0]; }
+    else{             v1 = info[1].vect[0]; }
+
+    if(info[2].n>0 ){ v2 = info[2].vect[0]; }
+    else{             v2 = info[3].vect[0]; }
+
+    if(info[4].n>0 ){ v3 = info[4].vect[0]; }
+    else{             v3 = info[5].vect[0]; }
+
+    if(info[6].n>0 ){ v4 = info[6].vect[0]; }
+    else{             v4 = info[7].vect[0]; }
+
+    return 1000.*1000.*(v4-v3).Angle(v2-v1);
+}
+
+
 void reco_track(){
 
     int ev, vol;
@@ -138,7 +157,7 @@ void reco_track(){
             for(int i=0;i<10;i++)
                 std::cout << "   " << info[i].n << "/" << required_hits[i] ;
             std::cout << "\n";
-*/
+
             if( good_event() ){ 
                 nGood++;
                 //std::cout << EVENT << "\t" << calc_angle() << "\t" << calc_angle1() << "\t" << calc_angle2() << "\n";
@@ -150,6 +169,13 @@ void reco_track(){
                 if( Ang1>0 && Ang1<1500) hAng1->Fill( Ang1 );
                 if( Ang2>0 && Ang2<1500) hAng2->Fill( Ang2 );
             } else {nBad++;}
+*/
+            if( good_event2() ){ 
+                nGood++;
+                Ang  = calc_angle3();
+                if( Ang>0 && Ang<1500)   hAng->Fill( Ang  );
+            } else {nBad++;}
+
 
             reset_info();
 //            if( (ev-EVENT)>1 ) std::cout << ev-1 << "\n";
@@ -160,8 +186,10 @@ void reco_track(){
     }
 
     TCanvas* canv = new TCanvas("canv","canv",800,600);
-    hAng1->Draw();
-    hAng2->Draw("same");
+    hAng->Fit("gaus");
+    hAng->Draw();
+//    hAng1->Draw();
+//    hAng2->Draw("same");
     canv->Print("ANG.png");
 
     std::cout << "Good / Bad : " << nGood << " / " << nBad << " \n";
