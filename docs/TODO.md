@@ -21,14 +21,15 @@
   * TPC geometry check
   * Numbering to input files
   * TPC signal builder
+  * Hits accounting
+  * Detector setup config
+
 
 ## Updating in progress
   * Setup notes
-  * Hits accounting
 
 ## To be done
   * Create beam noise event
-  * Detector setup config
   * Merge event
 
 ## Don't forget

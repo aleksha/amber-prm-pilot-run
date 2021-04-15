@@ -2,12 +2,23 @@
 echo "Command: $1";
 
 # ----- build cmd ----
+if [ $1 = -h ]
+then
+    echo "./prm clean      : clean build and run directories";
+    echo "./prm build      : build Geant4 project (run under g4-mc env)";
+    echo "./prm run-all    : run all four runners (beam, initial and scattered muons, recoil)";
+    echo "./prm run-muon   : run only initial and scattered muons";
+    echo "./prm run-proton : run only recoil";
+    echo "./prm run-noise  : generate noise events";
+fi
+
+# ----- build cmd ----
 if [ $1 = build ]
 then
     source scripts/build_g4.sh;
 fi
 
-# ----- clean run-all ----
+# ----- run-all -----
 if [ $1 = run-all ]
 then
     source scripts/run_beam.sh;
@@ -16,11 +27,17 @@ then
     source scripts/run_prot.sh;
 fi
 
-# ----- clean run-all ----
+# ----- run-muon ----
 if [ $1 = run-muon ]
 then
     source scripts/run_init.sh;
     source scripts/run_scat.sh;
+fi
+
+# ----- run-proton ----
+if [ $1 = run-proton ]
+then
+    source scripts/run_prot.sh;
 fi
 
 # ----- download noise dump file cmd ----
